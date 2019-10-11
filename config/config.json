@@ -1,0 +1,35 @@
+{ 
+    "development": {  
+      "username": "root",    
+      "password": "",  
+      "database": "ctlkart",  
+      "host": "127.0.0.1", 
+      "dialect": "mysql",   
+    
+      "connectionString": "mongodb://localhost:27017/todoapp",
+      "apiUrl": "http://192.168.1.27:3000/", 
+      "imageUrl": "http://192.168.1.27:3000/ctlcart/",
+      "secret": "REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
+      "refreshTokenSecret":"REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
+      "tokenLife": 60,
+      "refreshTokenLife": 43200
+    },
+    "production": { 
+      "username": "cb_webuser",
+      "password": "Uy,CV!4C3_PVVD5b",
+      "database": "CTLKART",
+      "host": "cb.c7tovfjbxlyz.eu-west-1.rds.amazonaws.com",
+      "dialect": "mysql",
+      
+      "connectionString": "mongodb://localhost:27017/todoapp",
+      "apiUrl": "http://192.168.1.27:3000/",
+      "imageUrl": "http://192.168.1.27:3000/ctlcart/",
+      "secret": "REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
+      "refreshTokenSecret":"REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
+      "tokenLife": 43200,
+      "refreshTokenLife": 43200
+    }
+   
+  
+  }
+  
