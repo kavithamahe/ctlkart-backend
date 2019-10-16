@@ -81,11 +81,11 @@ var User = sequelize.define('users', {
     updatedAt: "updated_at"
 })
 
-User.hasMany(OrderDetails, {foreignKey: 'id'});
-OrderDetails.belongsTo(User, {foreignKey: 'user_id'});
+// User.hasMany(OrderDetails, {foreignKey: 'id'});
+// OrderDetails.belongsTo(User, {foreignKey: 'user_id'});
 
-User.hasMany(Review, {foreignKey: 'id'});
-Review.belongsTo(User, {foreignKey: 'user_id'});
+// User.hasMany(Review, {foreignKey: 'id'});
+// Review.belongsTo(User, {foreignKey: 'user_id'});
 
 User.sync({force:false,alter:false});
 

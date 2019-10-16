@@ -15,15 +15,15 @@
       "refreshTokenLife": 43200
     },
     "production": { 
-      "username": "root",
-      "password": "CCkarT@934$#",
+      "username": "cb_webuser",
+      "password": "Uy,CV!4C3_PVVD5b",
       "database": "ctlcart",
-      "host": "ec2-15-206-15-223.ap-south-1.compute.amazonaws.com",
+      "host": "cb.c7tovfjbxlyz.eu-west-1.rds.amazonaws.com",
       "dialect": "mysql",
       
       "connectionString": "mongodb://localhost:27017/todoapp",
-      "apiUrl": "http://15.206.15.223:5000/",
-      "imageUrl": "http://15.206.15.223:5000/ctlkartservice/CTLkart_api/",
+      "apiUrl": "http://15.206.15.223:5003/",
+      "imageUrl": "http://15.206.15.223:5003/ctlkartservice/CTLkart_api/",
       "secret": "REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
       "refreshTokenSecret":"REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
       "tokenLife": 43200,

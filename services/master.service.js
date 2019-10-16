@@ -263,6 +263,7 @@ exports.deletesubsubcategoryservice = async function (params){
 }
 
     exports.getcategory = async function (){
+        console.log("categoryList")
         try {       
             var categoryList = await Master.findAll({
         
@@ -274,12 +275,12 @@ exports.deletesubsubcategoryservice = async function (params){
             }]
  
             });
-   
+   console.log(categoryList)
             return categoryList;
             }
             catch (e) {
                console.log(e);
-            throw Error('Server Error');
+            throw Error(e);
                
            }
     }
