@@ -61,10 +61,8 @@ var Product = sequelize.define('productDetails', {
     updatedAt: "updated_at"
 })
 
-// Product.hasMany(Review, {foreignKey: 'id'});
-// Review.belongsTo(Product, {foreignKey: 'product_id'});
-
-
+Product.hasMany(Review, {foreignKey: 'id'});
+Review.belongsTo(Product, {foreignKey: 'product_id'});
 
 
 // Master.hasMany(Product, {foreignKey: 'category_id'})

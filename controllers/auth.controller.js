@@ -145,6 +145,7 @@ exports.authenticate = async function (req, res, next) {
                     username:user.firstname,
                     gender:user.gender,
                     email:user.email,
+                    mobile:user.mobile,
                     user_type:user.user_type,
                     status: 200, 
                     success: true,

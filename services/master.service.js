@@ -275,11 +275,9 @@ exports.deletesubsubcategoryservice = async function (params){
             }]
  
             });
-   console.log(categoryList)
             return categoryList;
             }
             catch (e) {
-               console.log(e);
             throw Error(e);
                
            }

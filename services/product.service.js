@@ -1746,13 +1746,15 @@ exports.viewsingleproductreviewservice = async function (params) {
     }
 }
 exports.quantityavailcheckservice = async function (params) {
+    var qty = +params.quantity; 
     var singleproduct = await Product.findAll({
             
         where:{id:params.id}
 
         });
+        var exixtingqty = +singleproduct[0].existing_quantity; 
     try{
-        if(params.quantity > singleproduct[0].existing_quantity){
+        if(qty > exixtingqty){
            throw Error("Your selected quantity is more than available quantity...");
         }
         else{
