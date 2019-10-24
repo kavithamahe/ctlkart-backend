@@ -935,29 +935,37 @@ exports.removesingleproductservice = async function (params){
                             order_id:params.order_id,
                             status:params.status,
                         },
-                        include: [{
-                            model: User,
-                            required: false,
-                            attributes: ['id','firstname','lastname','email','mobile']
+                        // include: [{
+                        //     model: User,
+                        //     required: false,
+                        //     attributes: ['id','firstname','lastname','email','mobile']
                             
-                        }],
+                        // }],
                      
                     }); 
+                
                 }
                 else{
                     var singleproductList = await OrderDetails.findAll({
                         where: {
                             order_id:params.order_id,
                         },
-                        include: [{
-                            model: User,
-                            required: false,
-                            attributes: ['id','firstname','lastname','email','mobile']
+                        // include: [{
+                        //     model: User,
+                        //     required: false,
+                        //     attributes: ['id','firstname','lastname','email','mobile']
                             
-                        }],
+                        // }],
                      
                     }); 
+                
                 }
+                var userslist = await User.findOne({
+                    where: {
+                        id:params.user_id,
+                    },
+                 
+                });
                 //   console.log(singleproductList)
                       if(singleproductList != ''){
                         var singleaddress = await Customer.findOne({
@@ -966,6 +974,15 @@ exports.removesingleproductservice = async function (params){
                             }
                          
                         }); 
+                        if(userslist){
+                            singleproductList[0].dataValues.username = userslist.dataValues.username;
+                            singleproductList[0].dataValues.email = userslist.dataValues.email;
+                        }
+                        else{
+                            singleproductList[0].dataValues.username = "";
+                            singleproductList[0].dataValues.email = "";
+                        }
+
                         if(singleaddress){
                         singleproductList[0].dataValues.address = singleaddress.dataValues.address;
                         singleproductList[0].dataValues.city = singleaddress.dataValues.city;
