@@ -17,6 +17,7 @@
     "currency-symbol-map": "^4.0.4",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
+    "firebase-admin": "^8.6.1",
     "json-groupby": "^1.1.0",
     "jwt-decode": "^2.2.0",
     "multer": "^1.4.1",

@@ -332,7 +332,7 @@ exports.authenticate = async function (email) {
                  secure: false,
                   auth: {
                     user: "kavithamahe2@gmail.com",
-                    pass: "kavitha094"
+                    pass: "kavithabe94"
                  }
              });
 
@@ -368,6 +368,7 @@ exports.authenticate = async function (email) {
 
        
         } catch (e) {
+            console.log(e)
             throw Error(e + 'updateForgotPassword :: Error while Paginating lists')
         }
     }

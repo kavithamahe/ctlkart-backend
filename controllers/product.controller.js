@@ -1,6 +1,8 @@
 var _service = require('../services/product.service');  
 var validateErr = require('../utils/validateError');
 
+var admin = require("firebase-admin");
+
 exports.addproduct = async function (req, res, next) {
 
     try {
@@ -433,6 +435,7 @@ exports.removesingleproduct = async function (req, res, next) {
         try{
             var createdRecord = await _service.statuschangefororderservice(req.body)
             return res.status(200).json({
+                data:createdRecord,
                 status: 200,
                 message: "Updated Succesfully"
             })

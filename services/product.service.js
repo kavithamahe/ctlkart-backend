@@ -597,7 +597,7 @@ exports.removesingleproductservice = async function (params){
                             host:'smtp.gmail.com',
                             auth: {
                               user: 'kavithamahe2@gmail.com',
-                              pass: 'kavitha094'
+                              pass: 'kavithabe94'
                             },
                             tls: {
                                 rejectUnauthorized: false
@@ -714,7 +714,7 @@ exports.removesingleproductservice = async function (params){
                         host:'smtp.gmail.com',
                         auth: {
                           user: 'kavithamahe2@gmail.com',
-                          pass: 'kavitha094'
+                          pass: 'kavithabe94'
                         },
                         tls: {
                             rejectUnauthorized: false

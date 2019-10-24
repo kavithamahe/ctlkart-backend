@@ -68,7 +68,7 @@ app.use(expressJwt({
 
 }).unless({ path: ['/api/login', '/api/register','/api/password/forgot','/api/addcategory','/api/addsubcategory','/api/getcategory','/api/getcategorysearch','/api/getsubcategorysearch','/api/getsubcategory','/api/onetimepassword','/api/viewsingleaddress','/api/editaddress','/api/productcheckoutformcart','/api/updatecartquantity','/api/adminregister','/api/adminlogin'
 ,'/api/addproduct','/api/getproductlist','/api/viewsingleproduct','/api/addaddress','/api/getaddress','/api/productcheckout','/api/addsubsubcategory','/api/getproductlistsearch','/api/getsubsubcategory','/api/getmyorders','/api/addtocart','/api/getcartproduct','/api/removecartproduct','/api/getsubsubcategorysearch','/api/categorystatuschange','/api/quantityavailcheck',
-'/api/getuserszipcode','/api/getpendingorder'] }));
+'/api/getuserszipcode','/api/getpendingorder','/api/getusers'] }));
 
 
 app.use(function (err, req, res, next) {
@@ -87,7 +87,7 @@ app.use('/api', api);
 
 // start server
 
-var port = process.env.NODE_ENV === 'development' ? 3000 : 3000;     
+var port = process.env.NODE_ENV === 'production' ? 5003 : 5003;     
 
 var server = app.listen(port, function () {
     console.log('Server listening on port ' + port); 
