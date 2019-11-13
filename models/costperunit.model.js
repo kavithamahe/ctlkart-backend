@@ -37,7 +37,7 @@ var costperUnit = sequelize.define('unitvisecost', {
         type: Sequelize.STRING(255),
         allowNull: true,
     },
-    defaultunitselection: {
+    defaultselection: {
         type: Sequelize.TINYINT(4).UNSIGNED,
         allowNull: true,
     },

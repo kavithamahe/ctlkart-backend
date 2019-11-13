@@ -1918,15 +1918,15 @@ exports.viewsingleproductreviewservice = async function (params) {
 }
 exports.quantityavailcheckservice = async function (params) {
     var qty = +params.quantity; 
-    var singleproduct = await Product.findAll({
+    var singleproduct = await Unitcost.findAll({
             
         where:{id:params.id}
 
         });
-        var exixtingqty = +singleproduct[0].existing_quantity; 
+        var exixtingqty = +singleproduct[0].availablequantityperunits; 
     try{
         if(qty > exixtingqty){
-           throw Error("Your selected quantity is more than available quantity...");
+           throw Error("Your selected unit quantity is more than available quantity...");
         }
         else{
             return "true";
