@@ -171,6 +171,17 @@ router.post('/removeuserszipcode', AuthController.removeuserszipcode);
 
 router.post('/searchuserszipcode', AuthController.searchuserszipcode);
 
+router.post('/addunits', AuthController.addunits);
+
+router.post('/editunits', AuthController.editunit);
+
+router.post('/removeunits', AuthController.removeunits);
+
+router.post('/getallunits', AuthController.getallunits);
+
+router.post('/getsingleunit', AuthController.getsingleunit);
+
+
 
 
 

@@ -105,7 +105,7 @@ exports.deleteaccount = async function (req, res, next) {
 }
 exports.authenticate = async function (req, res, next) { 
     try {
-        var user = await _service.authenticate(req.body.email);
+        var user = await _service.authenticate(req.body.email,req.body.device_token);
  
  
         if (!user) {
@@ -448,6 +448,7 @@ exports.adduserszipcode = async function (req,res,next) {
         })
     }
 }
+
 exports.getuserszipcode = async function (req,res,next) {
     try{
         var createdRecord = await _service.getuserszipcodeservice(req.body)
@@ -502,6 +503,7 @@ exports.searchuserszipcode = async function (req,res,next) {
         })
     }
 }
+
 exports.edituserszipcode = async function (req,res,next) {
     try{
         var createdRecord = await _service.edituserszipcodeservice(req.body)
@@ -529,6 +531,100 @@ exports.removeuserszipcode = async function (req,res,next) {
             status: 200,
             data: createdRecord,
             message:"Removed Successfully"
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.addunits = async function (req,res,next) {
+    try{
+        var createdRecord = await _service.addunitsservice(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord,
+            message:"Added Successfully"
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+
+exports.editunit = async function (req,res,next) {
+    try{
+        var createdRecord = await _service.editunitservice(req.body)
+        return res.status(200).json({
+            status: 200,
+            message:"Updated Successfully"
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+
+exports.removeunits = async function (req,res,next) {
+    try{
+        var createdRecord = await _service.removeunitsservice(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord,
+            message:"Removed Successfully"
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.getallunits = async function (req,res,next) {
+    try{
+        var createdRecord = await _service.getallunitsservice(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.getsingleunit = async function (req,res,next) {
+    try{
+        var createdRecord = await _service.getsingleunitservice(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord
         })
     }
     catch(e){

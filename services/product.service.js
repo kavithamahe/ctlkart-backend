@@ -1,4 +1,5 @@
 var Product = require('../models/product.model');
+var Unitcost = require('../models/costperunit.model');
 var Customer = require('../models/customer.model');
 var OrderDetails = require('../models/order.model');
 var cartDetails = require('../models/cartdetails.model');
@@ -19,6 +20,7 @@ const Op = Sequelize.Op;
 var config = db.config; 
 
     exports.addproduct = async function (params,uploading) {
+        let obj = JSON.parse(params.unitvisecosts);
         var singleproduct = await Product.findAll({
             
             where:{
@@ -52,7 +54,9 @@ var config = db.config;
             status: 0,
             product_image:uploading.file.originalname
         })
+      
         try{
+          
             var category = await Master.update({
                 delete_status:1
                 },
@@ -86,6 +90,24 @@ var config = db.config;
             }
             if(singleproduct.length == 0){
             var savedRecord = await data.save();
+            if(obj != undefined){
+                for(var i=0;i<obj.length;i++){
+                var unitcost = Unitcost.build({
+                    product_id: savedRecord.dataValues.id,
+                    quantityperunit:obj[i].quantityperunit,
+                    unittype:obj[i].unittype,
+                    costperquantity:obj[i].costperquantity,
+                    defaultunitselection: obj[i].defaultunit,
+                    unitnotes: obj[i].unitnotes,
+                    totalquantityperunits: obj[i].totalquantityperunits,
+                    availablequantityperunits: obj[i].totalquantityperunits,
+                    status: obj[i].status,
+                })
+                var savedRecordcost = await unitcost.save();
+            }
+         
+            }
+          
             return savedRecord;
             }
             else{
@@ -164,6 +186,8 @@ var config = db.config;
             }
                 }
 exports.editsingleproductservice =async function (params,uploading) {
+    let obj = JSON.parse(params.unitvisecosts);
+    let obj_unit = JSON.parse(params.unitvisecosts);
 
     if(params.subsubcategory_id == '' || params.subsubcategory_id == 'null'){
         params.subsubcategory_id = null;
@@ -171,18 +195,69 @@ exports.editsingleproductservice =async function (params,uploading) {
     if(params.subcategory_id == '' || params.subcategory_id == 'null'){
         params.subcategory_id = null;
     }
-    // var singleproduct = await Product.findAll({
+    var singleunit = await Unitcost.findAll({
             
-    //     where:{
-    //         category_id:params.category_id,
-    //         subcategory_id:params.subcategory_id,
-    //         subsubcategory_id:params.subsubcategory_id,
-    //         product_name: {
-    //             [Op.like]: '%'+params.product_name+'%'
-    //           },
-    //     }
+        where:{
+            product_id: params.id,
+        }
+        });
+       
+    for(var i=0;i< obj.length;i++){
+        if(obj[i].id){
 
-    //     });
+            var unit_data = singleunit.find(x => x.id != obj[i].id) 
+
+            var ids = new Set(singleunit.map(({ id }) => id));
+
+            obj_unit = obj_unit.filter(({ id }) => !ids.has(id));
+           
+            if(obj_unit != undefined){
+                console.log(obj_unit.length);
+                for(var j=0;j< obj_unit.length;j++){
+                    console.log(obj_unit[j]);
+                    console.log(obj_unit[j].id);
+                    var unitremove = Unitcost.destroy({
+                        where: {
+                            id:obj_unit[j].id, 
+                        }
+                     
+                    }); 
+                }
+              
+            }
+
+        var unitcost = await Unitcost.update({
+            product_id: params.id,
+            quantityperunit:obj[i].quantityperunit,
+            unittype:obj[i].unittype,
+            costperquantity:obj[i].costperquantity,
+            // total_quantity:params.quantity,
+            defaultunitselection: obj[i].defaultunit,
+            unitnotes: obj[i].unitnotes,
+            totalquantityperunits: obj[i].totalquantityperunits,
+            availablequantityperunits: obj[i].totalquantityperunits,
+            status:obj[i].status,
+        },
+        { where:{
+            id:obj[i].id,
+        }
+        })
+        }
+        else{
+            var unitcost = Unitcost.build({
+                product_id: params.id,
+                quantityperunit:obj[i].quantityperunit,
+                unittype:obj[i].unittype,
+                costperquantity:obj[i].costperquantity,
+                defaultunitselection: obj[i].defaultunit,
+                unitnotes: obj[i].unitnotes,
+                totalquantityperunits: obj[i].totalquantityperunits,
+                availablequantityperunits: obj[i].totalquantityperunits,
+                status: obj[i].status,
+            })
+            var savedRecordcost = await unitcost.save();
+        }
+    }
     try{
         // if(singleproduct.length <= 1){
         if(uploading.file != undefined){
@@ -207,6 +282,9 @@ exports.editsingleproductservice =async function (params,uploading) {
             id:params.id,
         }
     });
+
+  
+
     
         return data;
         // }
@@ -517,7 +595,13 @@ exports.removesingleproductservice = async function (params){
             try {       
                 var singleproduct = await Product.findAll({
             
-                where:{id:params.id}
+                where:{id:params.id},
+                 include: [{
+                            model: Unitcost,
+                            required: false,
+                            // attributes: ['id','product_id','unittype','quantityperunit','costperquantity','total_quantity','existing_quantity']
+                            
+                        }],
         
                 });
         
@@ -543,6 +627,11 @@ exports.removesingleproductservice = async function (params){
                 where:{id:params.product_id}
         
                 });
+                var singleunit = await Unitcost.findAll({
+            
+                    where:{id:params.unitcostid}
+            
+                    });
                 var customerDetails = await Customer.findAll({
             
                     where:{id:params.customer_id}
@@ -566,6 +655,13 @@ exports.removesingleproductservice = async function (params){
                 },
                    { where:{
                        id:params.product_id
+                    }
+                })
+                var unitquantity = await Unitcost.update({
+                    availablequantityperunits:singleunit[0].availablequantityperunits - params.quantity
+                },
+                   { where:{
+                       id:params.unitcostid
                     }
                 })
                
@@ -665,6 +761,13 @@ exports.removesingleproductservice = async function (params){
                                 where:{id:params.productListsfromcart[i].id}
                         
                                 });
+
+                                var singleunit = await Unitcost.findAll({
+            
+                                    where:{id:params.productListsfromcart[i].unitcostid}
+                            
+                                    });
+
                             var cart = cartDetails.destroy({
                                 where: {
                                     [Op.and]: [{
@@ -675,7 +778,17 @@ exports.removesingleproductservice = async function (params){
                                 }
                              
                             }); 
-                           
+
+                            for(var k= 0;k<singleunit.length;k++){
+                                var unitquantity = await Unitcost.update({
+                                    availablequantityperunits:singleunit[k].availablequantityperunits - params.productListsfromcart[i].quantityperproduct
+                                },
+                                   { where:{
+                                       id:params.productListsfromcart[i].unitcostid
+                                    }
+                                })
+                                }
+
                             for(var j= 0;j<singleproduct.length;j++){
                             var productquantity = await Product.update({
                                 existing_quantity:singleproduct[j].existing_quantity - params.productListsfromcart[i].quantityperproduct
@@ -693,7 +806,7 @@ exports.removesingleproductservice = async function (params){
                                 product_id:params.productListsfromcart[i].id,
                                 product_name:params.productListsfromcart[i].product_name,
                                 product_image:params.productListsfromcart[i].product_image,
-                                priceperproduct:params.productListsfromcart[i].price,
+                                priceperproduct:params.productListsfromcart[i].costperquantity,
                                 totalamount:params.totalpricecart,
                                 ordered_date: today,
                                 ordered_time: dateTime,
@@ -928,8 +1041,26 @@ exports.removesingleproductservice = async function (params){
         }
         exports.viewsingleorderservice = async function (params){
             productlist = [];
+            
             try { 
                    if(params.status){
+                       if(params.status == 0 || params.status == 1 || params.status == 2){
+                           console.log(params.status)
+                    var singleproductList = await OrderDetails.findAll({
+                        where: {
+                            order_id:params.order_id,
+                            status:[0,1,2],
+                        },
+                        // include: [{
+                        //     model: User,
+                        //     required: false,
+                        //     attributes: ['id','firstname','lastname','email','mobile']
+                            
+                        // }],
+                     
+                    }); 
+                }
+                else{
                     var singleproductList = await OrderDetails.findAll({
                         where: {
                             order_id:params.order_id,
@@ -943,6 +1074,7 @@ exports.removesingleproductservice = async function (params){
                         // }],
                      
                     }); 
+                }
                 
                 }
                 else{
@@ -1329,7 +1461,7 @@ exports.statuschangefororderservice = async function (params){
         
     }
     catch (e) {
-       console.log(e);
+    //    console.log(e);
     throw Error(e);
        
    }
@@ -1709,14 +1841,16 @@ exports.productreviewservice = async function (params) {
     }
 
 }
-exports.getproductreviewservice = async function (params) {
+exports.getproductreviewservice = async function (id,params) {
+
     var reviewProduct = await Review.findAll({
-                    include: [{
-                            model: User,
-                            required: false,
-                            attributes: ['id','firstname','lastname','email','mobile']
+                    include: [
+                        // {
+                        //     model: User,
+                        //     required: false,
+                        //     attributes: ['id','firstname','lastname','email','mobile']
                             
-                        },
+                        // },
                         {
                             model: Product,
                             required: false,
@@ -1728,6 +1862,26 @@ exports.getproductreviewservice = async function (params) {
         ]
 
         });
+
+                var userslist = await User.findOne({
+                    where: {
+                        id:id,
+                    },
+                
+                });
+     
+                if(userslist){
+                    reviewProduct[0].dataValues.firstname = userslist.dataValues.firstname;
+                    reviewProduct[0].dataValues.lastname = userslist.dataValues.lastname;
+                    reviewProduct[0].dataValues.email = userslist.dataValues.email;
+                    reviewProduct[0].dataValues.mobile = userslist.dataValues.mobile;
+                }
+                else{
+                    reviewProduct[0].dataValues.firstname = "";
+                    reviewProduct[0].dataValues.lastname = "";
+                    reviewProduct[0].dataValues.email = "";
+                    reviewProduct[0].dataValues.mobile = "";
+                }
     try{
         return reviewProduct;
     }
