@@ -804,6 +804,7 @@ exports.removesingleproductservice = async function (params){
                                 customer_id:params.customer_id,
                                 order_id: id,
                                 product_id:params.productListsfromcart[i].id,
+                                unit_id:params.productListsfromcart[i].unitcostid,
                                 product_name:params.productListsfromcart[i].product_name,
                                 product_image:params.productListsfromcart[i].product_image,
                                 priceperproduct:params.productListsfromcart[i].costperquantity,
@@ -976,12 +977,12 @@ exports.removesingleproductservice = async function (params){
                         where: {
                             user_id:params.user_id
                         },
-                        // include: [{
-                        //     model: User,
-                        //     required: false,
-                        //     attributes: ['id','firstname','lastname','email','mobile']
+                        include: [{
+                            model: Unitcost,
+                            required: false,
+                            // attributes: ['id','firstname','lastname','email','mobile']
                             
-                        // }],
+                        }],
                         order: [
                             ['id', 'DESC']
                         ]
@@ -1011,6 +1012,12 @@ exports.removesingleproductservice = async function (params){
                         //     attributes: ['id','firstname','lastname','email','mobile']
                             
                         // }],
+                        include: [{
+                            model: Unitcost,
+                            required: false,
+                            // attributes: ['id','firstname','lastname','email','mobile']
+                            
+                        }],
                         order: [
                             ['id', 'DESC']
                         ]
@@ -1051,6 +1058,12 @@ exports.removesingleproductservice = async function (params){
                             order_id:params.order_id,
                             status:[0,1,2],
                         },
+                        include: [{
+                            model: Unitcost,
+                            required: false,
+                            // attributes: ['id','firstname','lastname','email','mobile']
+                            
+                        }],
                         // include: [{
                         //     model: User,
                         //     required: false,
@@ -1066,6 +1079,12 @@ exports.removesingleproductservice = async function (params){
                             order_id:params.order_id,
                             status:params.status,
                         },
+                        include: [{
+                            model: Unitcost,
+                            required: false,
+                            // attributes: ['id','firstname','lastname','email','mobile']
+                            
+                        }],
                         // include: [{
                         //     model: User,
                         //     required: false,

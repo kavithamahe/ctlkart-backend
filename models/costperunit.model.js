@@ -1,4 +1,5 @@
 var db = require('../shared/config');
+var orders = require('../models/order.model');
 
 const sequelize = db.sequelize;  
 const Sequelize = db.Sequelize;
@@ -52,6 +53,9 @@ var costperUnit = sequelize.define('unitvisecost', {
     createdAt: "created_at",
     updatedAt: "updated_at"
 })
+
+costperUnit.hasMany(orders, {foreignKey: 'id'});
+orders.belongsTo(costperUnit, {foreignKey: 'unit_id'});
 
 
 costperUnit.sync({force:false,alter:false});
