@@ -2,6 +2,7 @@ var _service = require('../services/product.service');
 var validateErr = require('../utils/validateError');
 
 var admin = require("firebase-admin");
+var jsonpath = require('../ctlkartadmin-firebase-adminsdk-2bl0m-6a2fd8eef2.json'); 
 
 exports.addproduct = async function (req, res, next) {
 
@@ -434,6 +435,40 @@ exports.removesingleproduct = async function (req, res, next) {
     exports.statuschangefororder  = async function (req,res,next) {
         try{
             var createdRecord = await _service.statuschangefororderservice(req.body)
+            var admin = require("firebase-admin");
+                 var serviceAccount = jsonpath;
+             
+             
+                 if (!admin.apps.length) {
+                    admin.initializeApp({
+                        credential: admin.credential.cert(serviceAccount),
+                        databaseURL: "https://ctlkartadmin.firebaseio.com"
+                      });
+                 }
+             
+                 var registrationToken = "f1sQVnZIo_A:APA91bF2dQn-BSvFGaa9DBSQMeGQCLaocgEwfXLiwxABr_j04IAFoa37wbPB2LpdiXhhsSE_2tTK9fFFW9rSmtnEDk-D7DpvGN-qnE13oZnweYi3VMMH2st6byEFWVU8EUR9o_LBusML";
+                 console.log(registrationToken);
+                 var payload = {
+                   notification: {
+                     title: "hi",
+                     body: "events[1].userdetails[i].description"
+                   }
+                 };
+             
+                  var options = {
+                   priority: "high",
+                   timeToLive: 60 * 60 *24
+                 };
+                 console.log(payload);
+                 admin.messaging().sendToDevice(registrationToken, payload, options)
+                   .then(function(response) {
+                     console.log("Successfully sent message:", response);
+                   })
+                   .catch(function(error) {
+                     console.log("Error sending message:", error);
+                   });
+
+
             return res.status(200).json({
                 data:createdRecord,
                 status: 200,
@@ -441,6 +476,7 @@ exports.removesingleproduct = async function (req, res, next) {
             })
         }
         catch(e){
+            
             console.log(e)
             var err = await validateErr.validateError(e);
             
@@ -580,7 +616,8 @@ exports.removesingleproduct = async function (req, res, next) {
     }
     exports.getproductreview = async function (req,res,next) {
         try{
-            var createdRecord = await _service.getproductreviewservice(req.body)
+            var user = await _service.getUser(req);
+            var createdRecord = await _service.getproductreviewservice(user.id,req.body)
             return res.status(200).json({
                 status: 200,
                 data: createdRecord

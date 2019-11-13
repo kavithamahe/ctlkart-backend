@@ -1,6 +1,7 @@
 var db = require('../shared/config');
 var Master= require('../models/master.model'); 
 var Subcategory = require('../models/subcategory.model');
+var Unitcost = require('../models/costperunit.model');
 
 var Review = require('../models/review.model');
 
@@ -35,11 +36,11 @@ var Product = sequelize.define('productDetails', {
     },
     price: {
         type: Sequelize.DECIMAL(12,6),
-        allowNull: false
+        allowNull: true
     },
     quantity: {
         type: Sequelize.CHAR(255),
-        allowNull: false
+        allowNull: true
     },
     existing_quantity: {
         type: Sequelize.CHAR(255),
@@ -65,8 +66,8 @@ Product.hasMany(Review, {foreignKey: 'id'});
 Review.belongsTo(Product, {foreignKey: 'product_id'});
 
 
-// Master.hasMany(Product, {foreignKey: 'category_id'})
-// Product.belongsTo(Master, {foreignKey: 'category_id'})
+Product.hasMany(Unitcost, {foreignKey: 'product_id'});
+Unitcost.belongsTo(Product, {foreignKey: 'id'});
 
 // Subcategory.hasMany(Product, {foreignKey: 'subcategory_id'})
 // Product.belongsTo(Subcategory, {foreignKey: 'id'})

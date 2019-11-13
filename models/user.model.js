@@ -66,6 +66,10 @@ var User = sequelize.define('users', {
         type: Sequelize.INTEGER(11).UNSIGNED,
         allowNull: true,
     },
+    device_token: {
+        type: Sequelize.TEXT(),
+        allowNull: true
+    },
     reset_password_token: {
         type: Sequelize.TEXT(),
         allowNull: true

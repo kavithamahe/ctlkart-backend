@@ -6,6 +6,8 @@ var AdminUser = require('../models/adminuser.model');
 
 var Zipcode = require('../models/zipcodedetails.model');
 
+var Units = require('../models/units.model');
+
 var bcrypt = require('bcryptjs');  
 
 var db = require('../shared/config');
@@ -225,8 +227,15 @@ exports.edituser = async function(get_user,uploading){
            
        }
    }
-exports.authenticate = async function (email) {
-
+exports.authenticate = async function (email,device_token) {
+    var record = User.update({
+                
+        device_token: device_token },
+        {where: { 
+            email: email
+            }
+    } 
+    )
         try {
            console.log(email)
             var user = User.findOne({
@@ -482,6 +491,7 @@ exports.authenticate = async function (email) {
         throw Error(e)
     }
     }
+  
     exports.getuserszipcodeservice  = async function (params){
         try {       
             var data = await Zipcode.findAll({
@@ -568,6 +578,91 @@ exports.authenticate = async function (email) {
            console.log(e);
 
            throw Error(e)
+           
+       }
+   }
+
+   exports.addunitsservice  = async function (params){
+    var data = Units.build({
+       units: params.units,
+       description:params.description,
+       status: 1,
+   })
+   try{
+       var savedRecord = await data.save();
+       return savedRecord;
+   }
+   catch (e) {
+       console.log(e)
+       throw Error(e)
+   }
+   }
+   exports.editunitservice  = async function (params){
+      
+    try{
+        var data =await Units.update({
+            units: params.units,
+            description:params.description,
+            status: 1,
+        },
+        {
+        where: {
+            id:params.id
+        }
+        
+        });
+    return data;
+    }
+    catch (e) {
+        throw Error(e)
+    }
+   }
+   exports.removeunitsservice = async function (params){
+    try {   
+
+        var data = Units.destroy({
+            where: { id: params.id}
+        });
+
+      return data;
+     }
+   
+        catch (e) {
+           console.log(e);
+
+           throw Error(e)
+           
+       }
+   }
+   exports.getallunitsservice  = async function (params){
+    try {       
+        var data = await Units.findAll({
+    
+          order: [['id', 'DESC']]
+
+        });
+
+        return data;
+        }
+        catch (e) {
+           console.log(e);
+        throw Error(e);
+           
+       }
+   }
+exports.getsingleunitservice  = async function (params){
+    try {       
+        var data = await Units.findOne({
+            where: {
+                id: params.id
+            }
+        });
+
+        return data;
+        }
+        catch (e) {
+           console.log(e);
+        throw Error(e);
            
        }
    }

@@ -14,9 +14,14 @@ var db = require('./shared/config');
 
 var path = require('path');
 
+var FCM = require('firebase');
+
 var config = db.config;   
 
+// var FCM = require('fcm-push');
 
+// var serverKey = 'AAAAy33CCWE:APA91bGKP5fJ9HW4ocjdJnt58rrr97IwLgrvvmLsb7ADEFj81TU03S2M51ZbfHxqzHJVlJUUIfMAke_9KD5Uy1-pYq24IePRQya02cldUPNJvrVTS4CgMgD0nJdH0yAN8S8njuXfZQec';
+// var fcm = new FCM(serverKey);
 
 app.use(cors()); 
 
@@ -31,6 +36,26 @@ app.use(function(req, res, next) {
   next();
 });
 
+// var serverKey = 'AAAAy33CCWE:APA91bGKP5fJ9HW4ocjdJnt58rrr97IwLgrvvmLsb7ADEFj81TU03S2M51ZbfHxqzHJVlJUUIfMAke_9KD5Uy1-pYq24IePRQya02cldUPNJvrVTS4CgMgD0nJdH0yAN8S8njuXfZQec';
+// var fcm = new FCM(serverKey);
+// const message = {
+//     to: "cvwPyfKjkz0:APA91bEzOuhOUdcWLE908Y3lNpPz94QGLCRqWzyQxu3zogtB3nk5y2OJIPjTUPo2_p7Jk9hLRQVLLiY_L51_4zGSaWiKA9wsuL3aY1Ywuw5YrXnG0OcFja9D6LQj16KymFRPtYJn0BhL",
+//     data: {
+//         your_custom_data_key: "accepted_invitation"
+//     },
+//     notification: {
+//         title: "Title of your push notification",
+//         body: "Body of your push notification"
+//     },
+// };
+// fcm.send(message)
+// .then(function(response){
+//     console.log("Successfully sent with response: ", response);
+// })
+// .catch(function(err){
+//     console.log("Something has gone wrong!");
+//     console.error(err);
+// });
 
 app.get('/', function (req, res, next) {
 
@@ -67,8 +92,8 @@ app.use(expressJwt({
   } 
 
 }).unless({ path: ['/api/login', '/api/register','/api/password/forgot','/api/addcategory','/api/addsubcategory','/api/getcategory','/api/getcategorysearch','/api/getsubcategorysearch','/api/getsubcategory','/api/onetimepassword','/api/viewsingleaddress','/api/editaddress','/api/productcheckoutformcart','/api/updatecartquantity','/api/adminregister','/api/adminlogin'
-,'/api/addproduct','/api/getproductlist','/api/viewsingleproduct','/api/addaddress','/api/getaddress','/api/productcheckout','/api/addsubsubcategory','/api/getproductlistsearch','/api/getsubsubcategory','/api/getmyorders','/api/addtocart','/api/getcartproduct','/api/removecartproduct','/api/getsubsubcategorysearch','/api/categorystatuschange','/api/quantityavailcheck',
-'/api/getuserszipcode','/api/getpendingorder','/api/getusers'] }));
+,'/api/addproduct','/api/editsingleproduct','/api/getproductlist','/api/viewsingleproduct','/api/addaddress','/api/getaddress','/api/productcheckout','/api/addsubsubcategory','/api/getproductlistsearch','/api/getsubsubcategory','/api/getmyorders','/api/addtocart','/api/getcartproduct','/api/removecartproduct','/api/getsubsubcategorysearch','/api/categorystatuschange','/api/quantityavailcheck',
+'/api/getuserszipcode','/api/getpendingorder','/api/getusers','/api/addunits','/api/editunits','/api/removeunits','/api/getallunits','/api/getsingleunit'] }));
 
 
 app.use(function (err, req, res, next) {
@@ -87,7 +112,7 @@ app.use('/api', api);
 
 // start server
 
-var port = process.env.NODE_ENV === 'production' ? 5003 : 5003;     
+var port = process.env.NODE_ENV === 'development' ? 3000 : 3000;     
 
 var server = app.listen(port, function () {
     console.log('Server listening on port ' + port); 
