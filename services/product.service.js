@@ -97,7 +97,7 @@ var config = db.config;
                     quantityperunit:obj[i].quantityperunit,
                     unittype:obj[i].unittype,
                     costperquantity:obj[i].costperquantity,
-                    defaultunit: obj[i].defaultunit,
+                    defaultselection: obj[i].defaultselection,
                     unitnotes: obj[i].unitnotes,
                     totalquantityperunits: obj[i].totalquantityperunits,
                     availablequantityperunits: obj[i].totalquantityperunits,
@@ -212,10 +212,10 @@ exports.editsingleproductservice =async function (params,uploading) {
             obj_unit = obj_unit.filter(({ id }) => !ids.has(id));
            
             if(obj_unit != undefined){
-                console.log(obj_unit.length);
+                // console.log(obj_unit.length);
                 for(var j=0;j< obj_unit.length;j++){
-                    console.log(obj_unit[j]);
-                    console.log(obj_unit[j].id);
+                    // console.log(obj_unit[j]);
+                    // console.log(obj_unit[j].id);
                     var unitremove = Unitcost.destroy({
                         where: {
                             id:obj_unit[j].id, 
@@ -232,7 +232,7 @@ exports.editsingleproductservice =async function (params,uploading) {
             unittype:obj[i].unittype,
             costperquantity:obj[i].costperquantity,
             // total_quantity:params.quantity,
-            defaultunit: obj[i].defaultunit,
+            defaultselection: obj[i].defaultselection,
             unitnotes: obj[i].unitnotes,
             totalquantityperunits: obj[i].totalquantityperunits,
             availablequantityperunits: obj[i].totalquantityperunits,
@@ -249,7 +249,7 @@ exports.editsingleproductservice =async function (params,uploading) {
                 quantityperunit:obj[i].quantityperunit,
                 unittype:obj[i].unittype,
                 costperquantity:obj[i].costperquantity,
-                defaultunitselection: obj[i].defaultunit,
+                defaultselection: obj[i].defaultselection,
                 unitnotes: obj[i].unitnotes,
                 totalquantityperunits: obj[i].totalquantityperunits,
                 availablequantityperunits: obj[i].totalquantityperunits,
@@ -1068,7 +1068,7 @@ exports.removesingleproductservice = async function (params){
             try { 
                    if(params.status){
                        if(params.status == 0 || params.status == 1 || params.status == 2){
-                           console.log(params.status)
+                        //    console.log(params.status)
                     var singleproductList = await OrderDetails.findAll({
                         where: {
                             order_id:params.order_id,
@@ -1239,9 +1239,15 @@ exports.removesingleproductservice = async function (params){
                 var cartproductList = await cartDetails.findAll({
                     where: {
                         user_id:params.user_id
-
-                    }
+                    },
+                    include: [{
+                        model: Unitcost,
+                        required: false,
+                        // attributes: ['id','firstname','lastname','email','mobile']
+                        
+                    }],
                 })
+
                 let total = 0;
                 for (var i = 0; i < cartproductList.length; i++) {
                     if (cartproductList[i].price) {

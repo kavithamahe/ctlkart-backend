@@ -68,7 +68,7 @@ exports.removesingleproduct = async function (req, res, next) {
     exports.getproductlist = async function (req,res,next) {
         try{
             var createdRecord = await _service.getproductlistservice(req.body)
-            console.log(createdRecord);
+            // console.log(createdRecord);
             return res.status(200).json({
                 status: 200,
                 data: createdRecord

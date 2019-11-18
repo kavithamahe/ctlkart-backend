@@ -1,5 +1,7 @@
 var db = require('../shared/config');
 var OrderDetails = require('../models/order.model');
+var CartDetails = require('../models/cartdetails.model');
+
 
 const sequelize = db.sequelize;  
 const Sequelize = db.Sequelize;
@@ -38,7 +40,7 @@ var costperUnit = sequelize.define('unitvisecost', {
         type: Sequelize.STRING(255),
         allowNull: true,
     },
-    defaultunit: {
+    defaultselection: {
         type: Sequelize.TINYINT(4).UNSIGNED,
         allowNull: true,
     },
@@ -56,6 +58,9 @@ var costperUnit = sequelize.define('unitvisecost', {
 
 costperUnit.hasMany(OrderDetails, {foreignKey: 'id'});
 OrderDetails.belongsTo(costperUnit, {foreignKey: 'unit_id'});
+
+costperUnit.hasMany(CartDetails, {foreignKey: 'id'});
+CartDetails.belongsTo(costperUnit, {foreignKey: 'unit_id'});
 
 costperUnit.sync({force:false,alter:false});
 
