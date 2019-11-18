@@ -8,7 +8,7 @@ var Subcategory = require('../models/subcategory.model');
 var Subsubcategory = require('../models/subsubcategory.model');
 var User = require('../models/user.model');
 var Review = require('../models/review.model');
-var Unit = require('../models/unit.model');
+var Unit = require('../models/units.model');
 var Sequelize = require('sequelize');
 
 var nodemailer = require('nodemailer');
