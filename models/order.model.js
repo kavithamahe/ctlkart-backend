@@ -25,6 +25,10 @@ var Orders = sequelize.define('OrderDetails', {
         type: Sequelize.INTEGER(11).UNSIGNED,
         allowNull: true,
     },
+    unit_id: {
+        type: Sequelize.INTEGER(10).UNSIGNED,
+        allowNull: true,
+    },
     product_name: {
         type: Sequelize.STRING(255),
         allowNull: false, 

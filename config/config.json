@@ -8,7 +8,7 @@
     
       "connectionString": "mongodb://localhost:27017/todoapp",
       "apiUrl": "http://192.168.1.27:3000/", 
-      "imageUrl": "http://192.168.1.27:3000/ctlcart/",
+      "imageUrl": "http://192.168.1.187:3000/ctlcart/",
       "secret": "REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
       "refreshTokenSecret":"REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
       "tokenLife": 60,

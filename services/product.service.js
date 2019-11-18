@@ -97,7 +97,7 @@ var config = db.config;
                     quantityperunit:obj[i].quantityperunit,
                     unittype:obj[i].unittype,
                     costperquantity:obj[i].costperquantity,
-                    defaultunitselection: obj[i].defaultunit,
+                    defaultunit: obj[i].defaultunit,
                     unitnotes: obj[i].unitnotes,
                     totalquantityperunits: obj[i].totalquantityperunits,
                     availablequantityperunits: obj[i].totalquantityperunits,
@@ -232,7 +232,7 @@ exports.editsingleproductservice =async function (params,uploading) {
             unittype:obj[i].unittype,
             costperquantity:obj[i].costperquantity,
             // total_quantity:params.quantity,
-            defaultunitselection: obj[i].defaultunit,
+            defaultunit: obj[i].defaultunit,
             unitnotes: obj[i].unitnotes,
             totalquantityperunits: obj[i].totalquantityperunits,
             availablequantityperunits: obj[i].totalquantityperunits,
@@ -804,6 +804,7 @@ exports.removesingleproductservice = async function (params){
                                 customer_id:params.customer_id,
                                 order_id: id,
                                 product_id:params.productListsfromcart[i].id,
+                                unit_id:params.productListsfromcart[i].unitcostid,
                                 product_name:params.productListsfromcart[i].product_name,
                                 product_image:params.productListsfromcart[i].product_image,
                                 priceperproduct:params.productListsfromcart[i].costperquantity,
@@ -971,22 +972,31 @@ exports.removesingleproductservice = async function (params){
         }
         exports.getmyordersservice = async function (params){
             try { 
-                if(params.user_id){
+                if(!params.user_id){
                     var productList = await OrderDetails.findAll({
-                        where: {
-                            user_id:params.user_id
-                        },
+                        // where: {
+                        //     user_id:params.user_id
+                        // },
+                      
                         // include: [{
-                        //     model: User,
+                        //     model: Unitcost,
                         //     required: false,
-                        //     attributes: ['id','firstname','lastname','email','mobile']
+                        //     // attributes: ['id','firstname','lastname','email','mobile']
                             
                         // }],
+                        attributes: ['id','user_id','customer_id','order_id','product_id','unit_id','product_name','product_image',
+                        'priceperproduct','totalamount','ordered_date','ordered_time','processing_date','processing_time','shipped_date','shipped_time',
+                        'delivered_date','delivered_time','cancelled_date','cancelled_time','quantity','payment_type','username','useremail','usermobile','review_status','created_at',
+                         [Sequelize.fn('min', Sequelize.col('status')), 'status']],
+                        group: ['order_id'],
                         order: [
-                            ['id', 'DESC']
-                        ]
+                            ['id', 'DESC'],
+                           
+                        ],
+                       
 
                     });  
+                
                  
                     const sorted = productList.reduce((result, items) => {
                         const a = result.find(({order_id}) => order_id === items.order_id);
@@ -1000,8 +1010,9 @@ exports.removesingleproductservice = async function (params){
                           
                         return result;
                     }, []);
+
                  
-                return sorted;
+                return productList;
                 }
                 else{
                     var productList = await OrderDetails.findAll({
@@ -1011,22 +1022,34 @@ exports.removesingleproductservice = async function (params){
                         //     attributes: ['id','firstname','lastname','email','mobile']
                             
                         // }],
+                        attributes: ['id','user_id','customer_id','order_id','product_id','unit_id','product_name','product_image',
+                        'priceperproduct','totalamount','ordered_date','ordered_time','processing_date','processing_time','shipped_date','shipped_time',
+                        'delivered_date','delivered_time','cancelled_date','cancelled_time','quantity','payment_type','username','useremail','usermobile','review_status','created_at',
+                         [Sequelize.fn('min', Sequelize.col('status')), 'status']],
+                         group: ['order_id'],
+                        //  include: [{
+                        //     model: Unitcost,
+                        //     required: false,
+                        //     // attributes: ['id','firstname','lastname','email','mobile']
+                            
+                        // }],
                         order: [
                             ['id', 'DESC']
                         ]
                     });  
-                    const sorted = productList.reduce((result, items) => {
-                        const a = result.find(({order_id}) => order_id === items.order_id);
-                        a ? a.items.push(items) : result.push({order_id: items.order_id,priceperproduct:items.priceperproduct,totalamount:items.totalamount,
-                            cancelled_date:items.cancelled_date,cancelled_time:items.cancelled_time,created_at:items.created_at,customer_id:items.customer_id,
-                            delivered_date:items.delivered_date,delivered_time:items.delivered_time,id:items.id,ordered_date:items.ordered_date,ordered_time:items.ordered_time,
-                            processing_date:items.processing_date,processing_time:items.processing_time,payment_type:items.payment_type,
-                            product_id:items.product_id,product_image:items.product_image,product_name:items.product_name,quantity:items.quantity,
-                            status:items.status,updated_at:items.updated_at,user_id:items.user_id,useremail:items.useremail,username:items.username,usermobile:items.usermobile,
-                            items: [items]});
+                 
+                    // const sorted = productList.reduce((result, items) => {
+                    //     const a = result.find(({order_id}) => order_id === items.order_id);
+                    //     a ? a.items.push(items) : result.push({order_id: items.order_id,priceperproduct:items.priceperproduct,totalamount:items.totalamount,
+                    //         cancelled_date:items.cancelled_date,cancelled_time:items.cancelled_time,created_at:items.created_at,customer_id:items.customer_id,
+                    //         delivered_date:items.delivered_date,delivered_time:items.delivered_time,id:items.id,ordered_date:items.ordered_date,ordered_time:items.ordered_time,
+                    //         processing_date:items.processing_date,processing_time:items.processing_time,payment_type:items.payment_type,
+                    //         product_id:items.product_id,product_image:items.product_image,product_name:items.product_name,quantity:items.quantity,
+                    //         status:items.status,updated_at:items.updated_at,user_id:items.user_id,useremail:items.useremail,username:items.username,usermobile:items.usermobile,
+                    //         items: [items]});
                           
-                        return result;
-                    }, []);
+                    //     return result;
+                    // }, []);
                  
                 return productList;
                 
@@ -1051,6 +1074,12 @@ exports.removesingleproductservice = async function (params){
                             order_id:params.order_id,
                             status:[0,1,2],
                         },
+                        include: [{
+                            model: Unitcost,
+                            required: false,
+                            // attributes: ['id','firstname','lastname','email','mobile']
+                            
+                        }],
                         // include: [{
                         //     model: User,
                         //     required: false,
@@ -1066,6 +1095,12 @@ exports.removesingleproductservice = async function (params){
                             order_id:params.order_id,
                             status:params.status,
                         },
+                        include: [{
+                            model: Unitcost,
+                            required: false,
+                            // attributes: ['id','firstname','lastname','email','mobile']
+                            
+                        }],
                         // include: [{
                         //     model: User,
                         //     required: false,
@@ -1082,6 +1117,12 @@ exports.removesingleproductservice = async function (params){
                         where: {
                             order_id:params.order_id,
                         },
+                        include: [{
+                            model: Unitcost,
+                            required: false,
+                            // attributes: ['id','firstname','lastname','email','mobile']
+                            
+                        }],
                         // include: [{
                         //     model: User,
                         //     required: false,
@@ -1170,6 +1211,7 @@ exports.removesingleproductservice = async function (params){
                                     var cartList = cartDetails.build({
                                         user_id:params.user_id,
                                         product_id:params.productDetails[i].product_id,
+                                        unit_id:params.productDetails[i].unit_id,
                                         product_name:cartproductList[j].product_name,
                                         price:cartproductList[j].price,
                                         quantity:params.productDetails[i].quantity,
@@ -1336,6 +1378,7 @@ exports.removesingleproductservice = async function (params){
                                 },
 
                             }},
+                            group: ['order_id'],
                             order: [
                                 ['id', 'DESC']
                             ]
