@@ -58,6 +58,7 @@ var username = params.firstname + " " + params.lastname;
         email: params.email,
         mobile: params.mobile,
         password: bcrypt.hashSync(params.password, 10),
+        user_type: 0,
         
     })
 
@@ -86,6 +87,7 @@ exports.createuseradmin = async function (params) {
         email: params.email,
         mobile: params.mobile,
         password: bcrypt.hashSync(params.password, 10),
+        user_type: 1,
         
     })
 
@@ -407,12 +409,14 @@ exports.authenticate = async function (email,device_token) {
     exports.getusersservice = async function (params){
         try { 
                 var userlists = await User.findAll({
+                    where:{
+                        user_type:{ [Op.not]: 1}
+                    },
                     order: [
                         ['id', 'DESC']
                     ]
             
                 });
-        
                 return userlists;
             }
             catch (e) {
