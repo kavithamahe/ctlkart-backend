@@ -732,7 +732,8 @@ exports.removesingleproductservice = async function (params){
                
         }
         exports.productcheckoutformcartservice = async function (params){  
-           
+            console.log("params.totalpricecart");
+           console.log(params.totalpricecart);
             var len = 6;
             var pattern = 'A0'
             var today = new Date();
