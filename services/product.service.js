@@ -8,6 +8,7 @@ var Subcategory = require('../models/subcategory.model');
 var Subsubcategory = require('../models/subsubcategory.model');
 var User = require('../models/user.model');
 var Review = require('../models/review.model');
+var Unit = require('../models/unit.model');
 var Sequelize = require('sequelize');
 
 var nodemailer = require('nodemailer');
@@ -92,10 +93,17 @@ var config = db.config;
             var savedRecord = await data.save();
             if(obj != undefined){
                 for(var i=0;i<obj.length;i++){
+                    var singleunit = await Unit.findOne({
+            
+                        where:{
+                            id:obj[i].unittype
+                        }
+                
+                        });
                 var unitcost = Unitcost.build({
                     product_id: savedRecord.dataValues.id,
                     quantityperunit:obj[i].quantityperunit,
-                    unittype:obj[i].unittype,
+                    unittype:singleunit.dataValues.units,
                     costperquantity:obj[i].costperquantity,
                     defaultselection: obj[i].defaultselection,
                     unitnotes: obj[i].unitnotes,
