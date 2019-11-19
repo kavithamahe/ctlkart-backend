@@ -20,6 +20,10 @@ var costperUnit = sequelize.define('unitvisecost', {
         type: Sequelize.STRING(255),
         allowNull: true,
     },
+    unit_id: {
+        type: Sequelize.INTEGER(11).UNSIGNED,
+        allowNull: true,
+    },
     quantityperunit: {
         type: Sequelize.STRING(255),
         allowNull: true,

@@ -104,6 +104,7 @@ var config = db.config;
                     product_id: savedRecord.dataValues.id,
                     quantityperunit:obj[i].quantityperunit,
                     unittype:singleunit.dataValues.units,
+                    unit_id:obj[i].unittype,
                     costperquantity:obj[i].costperquantity,
                     defaultselection: obj[i].defaultselection,
                     unitnotes: obj[i].unitnotes,
@@ -211,7 +212,15 @@ exports.editsingleproductservice =async function (params,uploading) {
         });
        
     for(var i=0;i< obj.length;i++){
+        var singleunit = await Unit.findOne({
+            
+            where:{
+                id:obj[i].unittype
+            }
+    
+            });
         if(obj[i].id){
+         
 
             var unit_data = singleunit.find(x => x.id != obj[i].id) 
 
@@ -237,7 +246,8 @@ exports.editsingleproductservice =async function (params,uploading) {
         var unitcost = await Unitcost.update({
             product_id: params.id,
             quantityperunit:obj[i].quantityperunit,
-            unittype:obj[i].unittype,
+            unittype:singleunit.dataValues.units,
+            unit_id:obj[i].unittype,
             costperquantity:obj[i].costperquantity,
             // total_quantity:params.quantity,
             defaultselection: obj[i].defaultselection,
@@ -255,7 +265,8 @@ exports.editsingleproductservice =async function (params,uploading) {
             var unitcost = Unitcost.build({
                 product_id: params.id,
                 quantityperunit:obj[i].quantityperunit,
-                unittype:obj[i].unittype,
+                unittype:singleunit.dataValues.units,
+                unit_id:obj[i].unittype,
                 costperquantity:obj[i].costperquantity,
                 defaultselection: obj[i].defaultselection,
                 unitnotes: obj[i].unitnotes,
@@ -566,7 +577,13 @@ exports.removesingleproductservice = async function (params){
                             where: productlists,
                             order: [
                                 ['price', 'DESC']
-                            ]
+                            ],
+                            include: [{
+                                model: Unitcost,
+                                required: false,
+                                // attributes: ['id','product_id','unittype','quantityperunit','costperquantity','total_quantity','existing_quantity']
+                                
+                            }],
                          
                         }); 
                     }
@@ -575,7 +592,13 @@ exports.removesingleproductservice = async function (params){
                             where: productlists,
                             order: [
                                 ['price', 'ASC']
-                            ]
+                            ],
+                            include: [{
+                                model: Unitcost,
+                                required: false,
+                                // attributes: ['id','product_id','unittype','quantityperunit','costperquantity','total_quantity','existing_quantity']
+                                
+                            }],
                          
                         }); 
                     }
@@ -584,7 +607,13 @@ exports.removesingleproductservice = async function (params){
                         where: productlists,
                         order: [
                             ['id', 'DESC']
-                        ]
+                        ],
+                        include: [{
+                            model: Unitcost,
+                            required: false,
+                            // attributes: ['id','product_id','unittype','quantityperunit','costperquantity','total_quantity','existing_quantity']
+                            
+                        }],
                      
                     });   
                 }
