@@ -93,7 +93,7 @@ app.use(expressJwt({
 
 }).unless({ path: ['/api/login', '/api/register','/api/password/forgot','/api/addcategory','/api/addsubcategory','/api/getcategory','/api/getcategorysearch','/api/getsubcategorysearch','/api/getsubcategory','/api/onetimepassword','/api/viewsingleaddress','/api/editaddress','/api/productcheckoutformcart','/api/updatecartquantity','/api/adminregister','/api/adminlogin'
 ,'/api/addproduct','/api/editsingleproduct','/api/getproductlist','/api/viewsingleproduct','/api/addaddress','/api/getaddress','/api/productcheckout','/api/addsubsubcategory','/api/getproductlistsearch','/api/getsubsubcategory','/api/addtocart','/api/getcartproduct','/api/removecartproduct','/api/getsubsubcategorysearch','/api/categorystatuschange','/api/quantityavailcheck',
-'/api/getuserszipcode','/api/getpendingorder','/api/getusers','/api/addunits','/api/editunits','/api/removeunits','/api/getallunits','/api/getsingleunit','/api/viewsingleorder','/api/getsinglecategory','/api/getsinglecategory','/api/editcategory','/api/getmyorders','/api/statuschangefororder'] }));
+'/api/getuserszipcode','/api/getpendingorder','/api/getusers','/api/addunits','/api/editunits','/api/removeunits','/api/getallunits','/api/getsingleunit','/api/viewsingleorder','/api/getsinglecategory','/api/getsinglecategory','/api/editcategory','/api/getmyorders','/api/statuschangefororder','/api/deletecategory'] }));
 
 
 app.use(function (err, req, res, next) {
