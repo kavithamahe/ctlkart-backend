@@ -612,7 +612,7 @@ exports.removesingleproductservice = async function (params){
                         }],
         
                 });
-        
+                
                 return singleproduct;
                 }
                 catch (e) {
@@ -1510,7 +1510,7 @@ exports.statuschangefororderservice = async function (params){
         },
         {
             where: {
-                    id:params.id
+                order_id:params.order_id
             },
 
 })
