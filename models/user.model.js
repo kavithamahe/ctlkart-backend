@@ -46,7 +46,10 @@ var User = sequelize.define('users', {
         type: Sequelize.STRING(255),
         allowNull: false
     },
-    
+    country_code: {
+        type: Sequelize.STRING(15),
+        allowNull: true
+    },
     mobile: {
         type: Sequelize.STRING(15),
         allowNull: true,

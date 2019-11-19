@@ -50,13 +50,15 @@ exports.getUser = async function(req){
 }
 
 exports.createuser = async function (params) {
-var username = params.firstname + " " + params.lastname;
+    var mobilenumber ="+" + params.country_code + params.mobile;
+    var username = params.firstname + " " + params.lastname;
     var record = User.build({
         firstname: params.firstname,
         lastname: params.lastname,
         username:username,
         email: params.email,
-        mobile: params.mobile,
+        country_code: params.country_code,
+        mobile: mobilenumber,
         password: bcrypt.hashSync(params.password, 10),
         user_type: 0,
         
@@ -173,8 +175,9 @@ exports.edituser = async function(get_user,uploading){
                             firstname: get_user.firstname,
                             lastname: get_user.lastname,
                             username:username,
-                            email: get_user.email,
-                            mobile: get_user.mobile,
+                            // email: get_user.email,
+                            // country_code: get_user.country_code,
+                            // mobile: get_user.mobile,
                             profile_image: profile_image
 
                     },
@@ -195,8 +198,9 @@ exports.edituser = async function(get_user,uploading){
                                     var editUser = await User.update({
                                         firstname: get_user.firstname,
                                         lastname: get_user.lastname,
-                                        email: get_user.email,
-                                        mobile: get_user.mobile,
+                                        // email: get_user.email,
+                                        // country_code: get_user.country_code,
+                                        // mobile: get_user.mobile,
             
                                 },
                                 {where: { id: get_user.id}}

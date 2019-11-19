@@ -112,7 +112,7 @@ app.use('/api', api);
 
 // start server
 
-var port = process.env.NODE_ENV === 'production' ? 5003 : 5003;     
+var port = process.env.NODE_ENV === 'development' ? 3000 : 3000;     
 
 var server = app.listen(port, function () {
     console.log('Server listening on port ' + port); 
