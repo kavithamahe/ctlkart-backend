@@ -137,6 +137,26 @@ router.post('/deletesubcategory', MasterController.deletesubcategory);
 
 router.post('/deletesubsubcategory', MasterController.deletesubsubcategory);
 
+/* ------- Currency APIS Start ------------- */
+
+router.post('/addCurrencies',MasterController.addCurrencies);
+router.post('/getCurrencyList',MasterController.getCurrencyLists);
+router.post('/getcurrencysearch',MasterController.getCurrencySearch);
+router.post('/getsinglecurrency',MasterController.getSingleCurrency);
+router.post('/updateCurrency',MasterController.updateCurrency);
+router.post('/deletecurrency',MasterController.deleteCurrency);
+
+/* ------- Currency APIS End ------------- */
+
+/* ------- Currency APIS Start ------------- */
+
+router.post('/addstocksettings',MasterController.addStockSettings);
+router.post('/addcurrencySettings',MasterController.addcurrencySettings);
+router.post('/getSettings',MasterController.getSettings);
+
+/* ------- Currency APIS End ------------- */
+
+
 router.post('/addproduct',upload.single('productimage'), ProductController.addproduct);
 
 router.post('/editsingleproduct',upload.single('productimage'), ProductController.editsingleproduct);

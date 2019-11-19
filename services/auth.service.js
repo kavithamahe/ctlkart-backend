@@ -7,6 +7,7 @@ var AdminUser = require('../models/adminuser.model');
 var Zipcode = require('../models/zipcodedetails.model');
 
 var Units = require('../models/units.model');
+var Currencies = require('../models/currency.model');
 
 var bcrypt = require('bcryptjs');  
 
@@ -605,6 +606,7 @@ exports.authenticate = async function (email,device_token) {
        throw Error(e)
    }
    }
+   
    exports.editunitservice  = async function (params){
       
     try{

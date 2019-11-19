@@ -338,3 +338,186 @@ exports.getsubsubcategory = async function (req,res,next) {
         })
     }
 }
+exports.addCurrencies = async function (req,res,next) {
+    try{
+        console.log("Currency datas in controller");    
+        console.log(req.body);
+
+        var createdRecord = await _service.addcurrencyService(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord,
+            message:"Added Successfully"
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.getCurrencyLists = async function (req,res,next) {
+    try{
+        var getRecords = await _service.getCurrencyListService(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: getRecords,
+           
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.getCurrencySearch = async function (req,res,next) {
+    try{
+        var getRecords = await _service.getCurrencySearchByKey(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: getRecords,
+           
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+
+exports.getSingleCurrency = async function (req,res,next) {
+    try{
+        var getRecords = await _service.getSingleCurrencybyId(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: getRecords,
+           
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+
+exports.updateCurrency = async function (req,res,next) {
+    try{
+        var getRecords = await _service.updateCurrencyById(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: getRecords,
+           message:'Updated Successfully'
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+
+exports.deleteCurrency = async function (req,res,next) {
+    try{
+        var getRecords = await _service.deleteCurrencyById(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: getRecords,
+           message:'Deleted Successfully'
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.addStockSettings = async function (req,res,next) {
+    try{
+    
+
+        var createdRecord = await _service.addStockSettingsService(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord,
+            message:"Added Successfully"
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.addcurrencySettings = async function (req,res,next) {
+    try{
+    
+
+        var createdRecord = await _service.addCurrencySettingsService(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord,
+            message:"Added Successfully"
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.getSettings = async function (req,res,next) {
+    try{
+    
+
+        var createdRecord = await _service.getSettingsService(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord,
+            
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
