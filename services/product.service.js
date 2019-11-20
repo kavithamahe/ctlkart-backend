@@ -68,7 +68,7 @@ var config = db.config;
             product_description: params.product_description,
             // price:params.price,
             // quantity:params.quantity,
-            existing_quantity:params.quantity,
+            // existing_quantity:params.quantity,
             status: 0,
             product_image:uploading.file.originalname
         })
@@ -233,15 +233,14 @@ exports.editsingleproductservice =async function (params,uploading) {
         });
        
     for(var i=0;i< obj.length;i++){
-        var singleunit = await Unit.findOne({
+        var unittypes = await Unit.findOne({
             
             where:{
-                id:obj[i].unittype
+                id:obj[i].unit_id
             }
     
             });
         if(obj[i].id){
-         
 
             var unit_data = singleunit.find(x => x.id != obj[i].id) 
 
@@ -267,8 +266,8 @@ exports.editsingleproductservice =async function (params,uploading) {
         var unitcost = await Unitcost.update({
             product_id: params.id,
             quantityperunit:obj[i].quantityperunit,
-            unittype:singleunit.dataValues.units,
-            unit_id:obj[i].unittype,
+            unittype:unittypes.dataValues.units,
+            unit_id:obj[i].unit_id,
             costperquantity:obj[i].costperquantity,
             // total_quantity:params.quantity,
             defaultselection: obj[i].defaultselection,
@@ -286,8 +285,8 @@ exports.editsingleproductservice =async function (params,uploading) {
             var unitcost = Unitcost.build({
                 product_id: params.id,
                 quantityperunit:obj[i].quantityperunit,
-                unittype:singleunit.dataValues.units,
-                unit_id:obj[i].unittype,
+                unittype:unittypes.dataValues.units,
+                unit_id:obj[i].unit_id,
                 costperquantity:obj[i].costperquantity,
                 defaultselection: obj[i].defaultselection,
                 unitnotes: obj[i].unitnotes,
@@ -312,9 +311,9 @@ exports.editsingleproductservice =async function (params,uploading) {
             subcategory_id:params.subcategory_id,
             subsubcategory_id:params.subsubcategory_id,
             product_description: params.product_description,
-            price:params.price,
-            quantity:params.quantity,
-            existing_quantity:params.quantity,
+            // price:params.price,
+            // quantity:params.quantity,
+            // existing_quantity:params.quantity,
             status: 0,
             product_image:originalimage
         },

@@ -46,7 +46,6 @@ var User = sequelize.define('users', {
         type: Sequelize.STRING(255),
         allowNull: false
     },
-    
     mobile: {
         type: Sequelize.STRING(15),
         allowNull: true,
