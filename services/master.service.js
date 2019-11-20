@@ -765,11 +765,10 @@ exports.getSettingsService = async function (params) {
                     'id':currency_id
                 }
             })
-            data.currency_name=getdetails.currency_name;
-            data.currency_icon=getdetails.currency_icon;
+            data.dataValues.currency_name=getdetails.currency_name;
+            data.dataValues.currency_icon=getdetails.currency_icon;
         }
-        console.log("AllDetails");
-        console.log(data);
+       
         return data;
     } catch (e) {
         console.log(e)
