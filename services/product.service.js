@@ -22,6 +22,9 @@ var config = db.config;
 
     exports.addproduct = async function (params,uploading) {
         let obj = JSON.parse(params.unitvisecosts);
+        if(params.subsubcategory_id){
+
+        
         var singleproduct = await Product.findAll({
             
             where:{
@@ -35,7 +38,21 @@ var config = db.config;
             }
     
             });
+        }else{
+            var singleproduct = await Product.findAll({
             
+                where:{
+                    category_id:params.category_id,
+                    subcategory_id:params.subcategory_id,
+                   
+                    product_name: {
+                        [Op.like]: '%'+params.product_name+'%'
+                      },
+                    status:{ [Op.not]: 3}
+                }
+        
+                });
+        }
         if(params.subsubcategory_id == ''){
             params.subsubcategory_id = null;
         }
@@ -90,8 +107,11 @@ var config = db.config;
             }); 
             }
             if(singleproduct.length == 0){
+                
             var savedRecord = await data.save();
             if(obj != undefined){
+                console.log("UnitALLLLLLL");
+                console.log(obj);
                 for(var i=0;i<obj.length;i++){
                     var singleunit = await Unit.findOne({
             
@@ -100,6 +120,7 @@ var config = db.config;
                         }
                 
                         });
+                        
                 var unitcost = Unitcost.build({
                     product_id: savedRecord.dataValues.id,
                     quantityperunit:obj[i].quantityperunit,
