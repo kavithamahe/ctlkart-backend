@@ -752,11 +752,24 @@ exports.addCurrencySettingsService = async function (params) {
 exports.getSettingsService = async function (params) {
 
     try {
-        var data = Settings.findOne({
+
+        var data = await Settings.findOne({
             where: {
                 'name': params.name,
             }
         })
+        if(params.name=='currencysetting'){
+            var currency_id=data.currency_id;
+            var getdetails=await Currencies.findOne({
+                where:{
+                    'id':currency_id
+                }
+            })
+            data.currency_name=getdetails.currency_name;
+            data.currency_icon=getdetails.currency_icon;
+        }
+        console.log("AllDetails");
+        console.log(data);
         return data;
     } catch (e) {
         console.log(e)

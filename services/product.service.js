@@ -22,6 +22,9 @@ var config = db.config;
 
     exports.addproduct = async function (params,uploading) {
         let obj = JSON.parse(params.unitvisecosts);
+        if(params.subsubcategory_id){
+
+        
         var singleproduct = await Product.findAll({
             
             where:{
@@ -35,7 +38,21 @@ var config = db.config;
             }
     
             });
+        }else{
+            var singleproduct = await Product.findAll({
             
+                where:{
+                    category_id:params.category_id,
+                    subcategory_id:params.subcategory_id,
+                   
+                    product_name: {
+                        [Op.like]: '%'+params.product_name+'%'
+                      },
+                    status:{ [Op.not]: 3}
+                }
+        
+                });
+        }
         if(params.subsubcategory_id == ''){
             params.subsubcategory_id = null;
         }
@@ -49,8 +66,8 @@ var config = db.config;
             subcategory_id:params.subcategory_id,
             subsubcategory_id:params.subsubcategory_id,
             product_description: params.product_description,
-            price:params.price,
-            quantity:params.quantity,
+            // price:params.price,
+            // quantity:params.quantity,
             existing_quantity:params.quantity,
             status: 0,
             product_image:uploading.file.originalname
@@ -90,21 +107,25 @@ var config = db.config;
             }); 
             }
             if(singleproduct.length == 0){
+                
             var savedRecord = await data.save();
             if(obj != undefined){
+                console.log("UnitALLLLLLL");
+                console.log(obj);
                 for(var i=0;i<obj.length;i++){
                     var singleunit = await Unit.findOne({
             
                         where:{
-                            id:obj[i].unittype
+                            id:obj[i].unit_id
                         }
                 
                         });
+                        
                 var unitcost = Unitcost.build({
                     product_id: savedRecord.dataValues.id,
                     quantityperunit:obj[i].quantityperunit,
                     unittype:singleunit.dataValues.units,
-                    unit_id:obj[i].unittype,
+                    unit_id:obj[i].unit_id,
                     costperquantity:obj[i].costperquantity,
                     defaultselection: obj[i].defaultselection,
                     unitnotes: obj[i].unitnotes,
