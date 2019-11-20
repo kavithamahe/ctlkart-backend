@@ -1,8 +1,8 @@
 { 
     "development": {  
       "username": "root",    
-      "password": "",  
-      "database": "ctlkart",  
+      "password": "Claritaz@987",  
+      "database": "ctlkart_new",  
       "host": "localhost", 
       "dialect": "mysql",   
     
