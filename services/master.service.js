@@ -642,8 +642,6 @@ exports.deleteCurrencyById = async function (params) {
     }
 }
 exports.addcurrencyService = async function (params) {
-    console.log("Currency Datas");
-    console.log(params.currency_name);
     var data = Currencies.build({
         currency_name: params.currency_name,
         currency_icon: params.currency_icon,
@@ -718,9 +716,6 @@ exports.addCurrencySettingsService = async function (params) {
             'name': params.name
         }
     });
-    console.log("Stock Settings");
-    console.log(finddata.length);
-    console.log(params.name);
     try {
     if (finddata.length == 0) {
 
