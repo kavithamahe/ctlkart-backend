@@ -58,7 +58,6 @@ exports.createuser = async function (params) {
         lastname: params.lastname,
         username:username,
         email: params.email,
-        country_code: params.country_code,
         mobile: mobilenumber,
         password: bcrypt.hashSync(params.password, 10),
         user_type: 0,
