@@ -1,8 +1,7 @@
 var _service = require('../services/product.service');  
 var validateErr = require('../utils/validateError');
+var FCM = require('fcm-push');
 
-var admin = require("firebase-admin");
-var jsonpath = require('../ctlkartadmin-firebase-adminsdk-2bl0m-6a2fd8eef2.json'); 
 
 exports.addproduct = async function (req, res, next) {
 
@@ -143,6 +142,27 @@ exports.removesingleproduct = async function (req, res, next) {
     exports.productcheckoutformcart = async function (req,res,next) {
         try{
             var createdRecord = await _service.productcheckoutformcartservice(req.body)
+            console.log(createdRecord.user.device_token)
+            var serverKey = 'AAAASOaAK7w:APA91bEyjTT-0ZJd1ctR91VgPZM-DgzCIjAx2jN_podIerlR9vkGIk31MwNi7wRGccqHjwCbn0XWGQGmd2Ls7MDryBKrDtPmtqkkVCVPy3_GEFKWZIz1NhLtErgEaVkYeYk6jt-3PzLJ';
+            var fcm = new FCM(serverKey);
+            const message = {
+                to: createdRecord.user.device_token,
+                data: {
+                    your_custom_data_key: "accepted_invitation"
+                },
+                notification: {
+                    title: "CTLKART",
+                    body: "Your order placed successfully"
+                },
+            };
+            fcm.send(message)
+            .then(function(response){
+                console.log("Successfully sent with response: ", response);
+            })
+            .catch(function(err){
+                console.log("Something has gone wrong!");
+                console.error(err);
+            });
             return res.status(200).json({
                 status: 200,
                 data: createdRecord,
@@ -436,39 +456,43 @@ exports.removesingleproduct = async function (req, res, next) {
     exports.statuschangefororder  = async function (req,res,next) {
         try{
             var createdRecord = await _service.statuschangefororderservice(req.body)
-            var admin = require("firebase-admin");
-                 var serviceAccount = jsonpath;
-             
-             
-                 if (!admin.apps.length) {
-                    admin.initializeApp({
-                        credential: admin.credential.cert(serviceAccount),
-                        databaseURL: "https://ctlkartadmin.firebaseio.com"
-                      });
-                 }
-             
-                 var registrationToken = "f1sQVnZIo_A:APA91bF2dQn-BSvFGaa9DBSQMeGQCLaocgEwfXLiwxABr_j04IAFoa37wbPB2LpdiXhhsSE_2tTK9fFFW9rSmtnEDk-D7DpvGN-qnE13oZnweYi3VMMH2st6byEFWVU8EUR9o_LBusML";
-                 console.log(registrationToken);
-                 var payload = {
-                   notification: {
-                     title: "hi",
-                     body: "events[1].userdetails[i].description"
-                   }
-                 };
-             
-                  var options = {
-                   priority: "high",
-                   timeToLive: 60 * 60 *24
-                 };
-                 console.log(payload);
-                 admin.messaging().sendToDevice(registrationToken, payload, options)
-                   .then(function(response) {
-                     console.log("Successfully sent message:", response);
-                   })
-                   .catch(function(error) {
-                     console.log("Error sending message:", error);
-                   });
 
+            console.log(createdRecord.status)
+            if(createdRecord.status == 1){
+                var ordermessage = "Your order has been processed successfully";
+            }
+            else if(createdRecord.status == 2){
+                var ordermessage = "Your order has been shipped successfully";
+            }
+            else if(createdRecord.status == 3){
+                var ordermessage = "Your order has been delivered successfully";
+            }
+            else if(createdRecord.status == 4){
+                var ordermessage = "Your order has been cancelled";
+            }
+            var serverKey = 'AAAASOaAK7w:APA91bEyjTT-0ZJd1ctR91VgPZM-DgzCIjAx2jN_podIerlR9vkGIk31MwNi7wRGccqHjwCbn0XWGQGmd2Ls7MDryBKrDtPmtqkkVCVPy3_GEFKWZIz1NhLtErgEaVkYeYk6jt-3PzLJ';
+            var fcm = new FCM(serverKey);
+            console.log(createdRecord.user.device_token)
+            const message = {
+                to: createdRecord.user.device_token,
+                data: {
+                    your_custom_data_key: "accepted_invitation",
+                    order_id :createdRecord.order_id,
+                    status :createdRecord.status
+                },
+                notification: {
+                    title: "CTLKART",
+                    body: ordermessage
+                },
+            };
+            fcm.send(message)
+            .then(function(response){
+                console.log("Successfully sent with response: ", response);
+            })
+            .catch(function(err){
+                console.log("Something has gone wrong!");
+                console.error(err);
+            });
 
             return res.status(200).json({
                 data:createdRecord,

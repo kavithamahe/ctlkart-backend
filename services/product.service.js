@@ -908,7 +908,8 @@ exports.removesingleproductservice = async function (params){
                           console.log('Email sent: ' + info.response);
                         }
                       });
-                      return ordersavedRecord;
+                      var orderdata = {"ordersavedRecord":ordersavedRecord,"user":userDetails[0]}
+                      return orderdata;
                 }
                 catch (e) {
                     throw Error(e)
@@ -1562,9 +1563,21 @@ exports.statuschangefororderservice = async function (params){
                 order_id:params.order_id
             },
 
-})
-       
-        return updatecartproductList;
+        })
+        var userdetailsorder = await OrderDetails.findOne({
+            where: {
+                order_id:params.order_id
+            },
+        })
+      
+        var userdetails = await User.findAll({
+            where: {
+                id:userdetailsorder.user_id
+            },
+        })
+        // console.log(userdetails);
+        var returndata = {'user':userdetails[0],'status':params.status,'order_id':params.order_id,'userdetailsorder':userdetailsorder}
+        return returndata;
         
     }
     catch (e) {

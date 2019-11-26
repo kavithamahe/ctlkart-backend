@@ -14,14 +14,13 @@ var db = require('./shared/config');
 
 var path = require('path');
 
-var FCM = require('firebase');
+// var FCM = require('firebase');
+
+var FCM = require('fcm-push');
 
 var config = db.config;   
 
-// var FCM = require('fcm-push');
 
-// var serverKey = 'AAAAy33CCWE:APA91bGKP5fJ9HW4ocjdJnt58rrr97IwLgrvvmLsb7ADEFj81TU03S2M51ZbfHxqzHJVlJUUIfMAke_9KD5Uy1-pYq24IePRQya02cldUPNJvrVTS4CgMgD0nJdH0yAN8S8njuXfZQec';
-// var fcm = new FCM(serverKey);
 
 app.use(cors()); 
 
@@ -37,9 +36,10 @@ app.use(function(req, res, next) {
 });
 
 // var serverKey = 'AAAAy33CCWE:APA91bGKP5fJ9HW4ocjdJnt58rrr97IwLgrvvmLsb7ADEFj81TU03S2M51ZbfHxqzHJVlJUUIfMAke_9KD5Uy1-pYq24IePRQya02cldUPNJvrVTS4CgMgD0nJdH0yAN8S8njuXfZQec';
+// var serverKey = 'AAAASOaAK7w:APA91bEyjTT-0ZJd1ctR91VgPZM-DgzCIjAx2jN_podIerlR9vkGIk31MwNi7wRGccqHjwCbn0XWGQGmd2Ls7MDryBKrDtPmtqkkVCVPy3_GEFKWZIz1NhLtErgEaVkYeYk6jt-3PzLJ';
 // var fcm = new FCM(serverKey);
 // const message = {
-//     to: "cvwPyfKjkz0:APA91bEzOuhOUdcWLE908Y3lNpPz94QGLCRqWzyQxu3zogtB3nk5y2OJIPjTUPo2_p7Jk9hLRQVLLiY_L51_4zGSaWiKA9wsuL3aY1Ywuw5YrXnG0OcFja9D6LQj16KymFRPtYJn0BhL",
+//     to: "f-lnc7wJZwI:APA91bFtbH4xf0XfHOx55vryVjo21GipFXivXKOgmJ9qxJsS6fvr4XO9ZKVJm0KORQ0cSrsXyseE49JCXriq5kIX6jd9g3Pd-RBEc2miI-u9rFRoOQrOS_v3mmU2DFlMOu7bd6Z6szGd",
 //     data: {
 //         your_custom_data_key: "accepted_invitation"
 //     },
