@@ -76,6 +76,10 @@ var User = sequelize.define('users', {
     reset_password_expires: {
         type: Sequelize.DATE
     },
+    status: {
+        type: Sequelize.TINYINT(4),
+        allowNull:true
+    },
     created_at: Sequelize.DATE,
     updated_at: Sequelize.DATE,
 }, {
