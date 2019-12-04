@@ -1990,47 +1990,24 @@ exports.productreviewservice = async function (params) {
     }
 
 }
-exports.getproductreviewservice = async function (id,params) {
+exports.getproductreviewservice = async function (params) {
 
     var reviewProduct = await Review.findAll({
                     include: [
-                        // {
-                        //     model: User,
-                        //     required: false,
-                        //     attributes: ['id','firstname','lastname','email','mobile']
-                            
-                        // },
+                        {
+                            model: User,
+                            required: false,                           
+                        },
                         {
                             model: Product,
                             required: false,
-                            // attributes: ['id','firstname','lastname','email','mobile']
                         }
                     ],
-        order: [
-            ['id', 'DESC']
-        ]
+                order: [
+                    ['id', 'DESC']
+                ]
 
         });
-
-                var userslist = await User.findOne({
-                    where: {
-                        id:id,
-                    },
-                
-                });
-     
-                if(userslist){
-                    reviewProduct[0].dataValues.firstname = userslist.dataValues.firstname;
-                    reviewProduct[0].dataValues.lastname = userslist.dataValues.lastname;
-                    reviewProduct[0].dataValues.email = userslist.dataValues.email;
-                    reviewProduct[0].dataValues.mobile = userslist.dataValues.mobile;
-                }
-                else{
-                    reviewProduct[0].dataValues.firstname = "";
-                    reviewProduct[0].dataValues.lastname = "";
-                    reviewProduct[0].dataValues.email = "";
-                    reviewProduct[0].dataValues.mobile = "";
-                }
     try{
         return reviewProduct;
     }

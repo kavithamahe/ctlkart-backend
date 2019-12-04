@@ -641,8 +641,7 @@ exports.removesingleproduct = async function (req, res, next) {
     }
     exports.getproductreview = async function (req,res,next) {
         try{
-            var user = await _service.getUser(req);
-            var createdRecord = await _service.getproductreviewservice(user.id,req.body)
+            var createdRecord = await _service.getproductreviewservice(req.body)
             return res.status(200).json({
                 status: 200,
                 data: createdRecord
