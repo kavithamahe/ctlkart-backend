@@ -3,6 +3,7 @@ var Subcategory = require('../models/subcategory.model');
 var Subsubcategory = require('../models/subsubcategory.model');
 var Currencies = require('../models/currency.model');
 var Settings = require('../models/settings.model');
+var Notification=require('../models/notification.model');
 var Sequelize = require('sequelize');
 
 const Op = Sequelize.Op;
@@ -272,7 +273,24 @@ exports.getcategory = async function () {
 
     }
 }
+exports.getnotifications = async function (params) {
+    try {
+        var notifications = await Notification.findAll({
+            where:{
+                receiver_id:params.user_id
+            },
+            order: [
+                ['id', 'DESC']
+            ],
+            
 
+        });
+        return notifications;
+    } catch (e) {
+        throw Error(e);
+
+    }
+}
 exports.getsinglecategoryservice = async function (params) {
     try {
         var categoryList = await Master.findOne({

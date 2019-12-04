@@ -48,6 +48,8 @@ router.post('/getsinglesubcategory', MasterController.getsinglesubcategory);
 router.post('/getsinglesubsubcategory', MasterController.getsinglesubsubcategory);
 
 router.post('/getcategory', MasterController.getcategory);
+router.post('/getnotifications', MasterController.getnotifications);
+
 
 router.post('/getcategorysearch', MasterController.getcategorysearch);
 
@@ -175,6 +177,7 @@ router.post('/removesingleproduct', ProductController.removesingleproduct);
 router.post('/statuschangefororder', ProductController.statuschangefororder);
 
 router.post('/getusers', AuthController.getusers);
+
 
 router.post('/getuserssearch', AuthController.getuserssearch);
 

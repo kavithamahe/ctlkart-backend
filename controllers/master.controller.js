@@ -193,6 +193,24 @@ exports.getcategory = async function (req,res,next) {
         })
     }
 }
+exports.getnotifications = async function (req,res,next) {
+    try{
+        var getList = await _service.getnotifications(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: getList
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
 exports.getsinglecategory = async function (req,res,next) {
     try{
         var createdRecord = await _service.getsinglecategoryservice(req.body)
