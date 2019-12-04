@@ -83,6 +83,8 @@ router.post('/removeaddress', ProductController.removeaddress);
 
 router.post('/getmyorders', ProductController.getmyorders);
 
+router.post('/getordersforreport', ProductController.getordersforreport);
+
 router.post('/viewsingleorder', ProductController.viewsingleorder);
 
 router.post('/addtocart', ProductController.addtocart);
@@ -181,6 +183,8 @@ router.post('/getuserssearch', AuthController.getuserssearch);
 
 router.post('/getproductreview', ProductController.getproductreview);
 
+router.post('/getsingleproductreview', ProductController.getsingleproductreview);
+
 router.post('/viewsingleproductreview', ProductController.viewsingleproductreview);
 
 router.post('/categoryactivestatus', ProductController.categoryactivestatus);
@@ -210,6 +214,8 @@ router.post('/removeunits', AuthController.removeunits);
 router.post('/getallunits', AuthController.getallunits);
 
 router.post('/getsingleunit', AuthController.getsingleunit);
+
+
 
 
 

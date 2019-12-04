@@ -922,7 +922,8 @@ exports.removesingleproductservice = async function (params){
                           console.log('Email sent: ' + info.response);
                         }
                       });
-                      return ordersavedRecord;
+                      var orderdata = {"ordersavedRecord":ordersavedRecord,"user":userDetails[0]}
+                      return orderdata;
                 }
                 catch (e) {
                     throw Error(e)
@@ -1148,16 +1149,14 @@ exports.removesingleproductservice = async function (params){
                         },
                         include: [{
                             model: Unitcost,
+                            required: false,                           
+                        },
+                        {
+                            model: Customer,
                             required: false,
-                            // attributes: ['id','firstname','lastname','email','mobile']
                             
-                        }],
-                        // include: [{
-                        //     model: User,
-                        //     required: false,
-                        //     attributes: ['id','firstname','lastname','email','mobile']
-                            
-                        // }],
+                        }
+                        ],
                      
                     }); 
                 }
@@ -1169,16 +1168,14 @@ exports.removesingleproductservice = async function (params){
                         },
                         include: [{
                             model: Unitcost,
+                            required: false,                           
+                        },
+                        {
+                            model: Customer,
                             required: false,
-                            // attributes: ['id','firstname','lastname','email','mobile']
                             
-                        }],
-                        // include: [{
-                        //     model: User,
-                        //     required: false,
-                        //     attributes: ['id','firstname','lastname','email','mobile']
-                            
-                        // }],
+                        }
+                        ],
                      
                     }); 
                 }
@@ -1575,27 +1572,40 @@ exports.statuschangefororderservice = async function (params){
             where: {
                 order_id:params.order_id
             },
-            
-})
-var getorderdetails=await OrderDetails.findOne({
 
-},{
-    where:{
-        order_id:params.order_id
-    }
-}
-);
-    var notificationdata=Notification.build({
-        sender_id:getorderdetails.user_id,
-        receiver_id:'6',
-        notify_type:'orderstatusChange',
-        read_status:'0',
-        message:'The order status has been changed',
-        url:'orders',
-        inserted_id:params.order_id
-    });
-var notificationsave = await notificationdata.save();
-        return updatecartproductList;
+        })
+        var userdetailsorder = await OrderDetails.findOne({
+            where: {
+                order_id:params.order_id
+            },
+        })
+      
+        var userdetails = await User.findAll({
+            where: {
+                id:userdetailsorder.user_id
+            },
+        })
+        var getorderdetails=await OrderDetails.findOne({
+
+        },{
+            where:{
+                order_id:params.order_id
+            }
+        }
+        );
+            var notificationdata=Notification.build({
+                sender_id:getorderdetails.user_id,
+                receiver_id:'6',
+                notify_type:'orderstatusChange',
+                read_status:'0',
+                message:'The order status has been changed',
+                url:'orders',
+                inserted_id:params.order_id
+            });
+        var notificationsave = await notificationdata.save();
+        // console.log(userdetails);
+        var returndata = {'user':userdetails[0],'status':params.status,'order_id':params.order_id,'userdetailsorder':userdetailsorder}
+        return returndata;
         
     }
     catch (e) {
@@ -1956,6 +1966,7 @@ exports.productreviewservice = async function (params) {
     var data = Review.build({
         product_id: params.product_id,
         user_id:params.user_id,
+        order_id:params.orderId,
         rating:params.rating,
         ratingcomments:params.ratingcomments,
         status: 0,
@@ -2027,6 +2038,20 @@ exports.getproductreviewservice = async function (id,params) {
         throw Error(e)
     }
 }
+exports.getsingleproductreviewservice = async function (params) {
+
+    var reviewProduct = await Review.findOne({
+        where:{
+            order_id:params.order_id
+        },
+        });
+    try{
+        return reviewProduct;
+    }
+    catch (e) {
+        throw Error(e)
+    }
+}
 exports.viewsingleproductreviewservice = async function (params) {
     var reviewProduct = await Review.findAll({
                         where:{id:params.id},
@@ -2069,6 +2094,24 @@ exports.quantityavailcheckservice = async function (params) {
         else{
             return "true";
         }
+    }
+    catch (e) {
+        throw Error(e)
+    }
+
+}
+
+exports.getordersforreportservice = async function (params) {
+    var orders = await OrderDetails.findAll({
+        include: [{
+            model: User,
+            required: false,
+            
+        }],
+
+        });
+    try{
+      return orders;
     }
     catch (e) {
         throw Error(e)

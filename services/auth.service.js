@@ -183,9 +183,9 @@ exports.edituser = async function(get_user,uploading){
                             firstname: get_user.firstname,
                             lastname: get_user.lastname,
                             username:username,
-                            // email: get_user.email,
+                            email: get_user.email,
                             // country_code: get_user.country_code,
-                            // mobile: get_user.mobile,
+                            mobile: get_user.mobile,
                             profile_image: profile_image
 
                     },
@@ -206,9 +206,9 @@ exports.edituser = async function(get_user,uploading){
                                     var editUser = await User.update({
                                         firstname: get_user.firstname,
                                         lastname: get_user.lastname,
-                                        // email: get_user.email,
+                                        email: get_user.email,
                                         // country_code: get_user.country_code,
-                                        // mobile: get_user.mobile,
+                                        mobile: get_user.mobile,
             
                                 },
                                 {where: { id: get_user.id}}
