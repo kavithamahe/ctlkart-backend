@@ -9,6 +9,7 @@ var Subsubcategory = require('../models/subsubcategory.model');
 var User = require('../models/user.model');
 var Review = require('../models/review.model');
 var Unit = require('../models/units.model');
+var Notification=require('../models/notification.model');
 var Sequelize = require('sequelize');
 
 var nodemailer = require('nodemailer');
@@ -876,7 +877,20 @@ exports.removesingleproductservice = async function (params){
                                 useremail:userDetails[0].email,
                                 usermobile:userDetails[0].mobile,
                             })
+                           
+                            
                             var ordersavedRecord = await orderdata.save();
+                            var notificationdata=Notification.build({
+                                sender_id:params.user_id,
+                                receiver_id:'6',
+                                notify_type:'newOrder',
+                                read_status:'0',
+                                message:'You have a new order',
+                                url:'orders',
+                                inserted_id:ordersavedRecord.dataValues.id,
+                            });
+                            var notificationsave = await notificationdata.save();
+
                         }
                     }
                 
@@ -1561,9 +1575,26 @@ exports.statuschangefororderservice = async function (params){
             where: {
                 order_id:params.order_id
             },
-
+            
 })
-       
+var getorderdetails=await OrderDetails.findOne({
+
+},{
+    where:{
+        order_id:params.order_id
+    }
+}
+);
+    var notificationdata=Notification.build({
+        sender_id:getorderdetails.user_id,
+        receiver_id:'6',
+        notify_type:'orderstatusChange',
+        read_status:'0',
+        message:'The order status has been changed',
+        url:'orders',
+        inserted_id:params.order_id
+    });
+var notificationsave = await notificationdata.save();
         return updatecartproductList;
         
     }
