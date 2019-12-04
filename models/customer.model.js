@@ -1,4 +1,5 @@
 var db = require('../shared/config');
+var Order = require('../models/order.model');
 
 const sequelize = db.sequelize;  
 const Sequelize = db.Sequelize;
@@ -60,6 +61,9 @@ var Customer = sequelize.define('CustomerDetails', {
     createdAt: "created_at",
     updatedAt: "updated_at"
 })
+
+Customer.hasMany(Order, {foreignKey: 'id'});
+Order.belongsTo(Customer, {foreignKey: 'customer_id'});
 
 Customer.sync({force:false,alter:false});
 

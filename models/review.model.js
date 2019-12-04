@@ -17,6 +17,10 @@ var Review = sequelize.define('reviewdetails', {
         type: Sequelize.INTEGER(11).UNSIGNED,
          allowNull: true,
     },
+    order_id: {
+        type: Sequelize.STRING(255),
+        allowNull: true, 
+    },
     rating: {
         type: Sequelize.STRING(255),
         allowNull: false, 

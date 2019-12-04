@@ -1135,16 +1135,14 @@ exports.removesingleproductservice = async function (params){
                         },
                         include: [{
                             model: Unitcost,
+                            required: false,                           
+                        },
+                        {
+                            model: Customer,
                             required: false,
-                            // attributes: ['id','firstname','lastname','email','mobile']
                             
-                        }],
-                        // include: [{
-                        //     model: User,
-                        //     required: false,
-                        //     attributes: ['id','firstname','lastname','email','mobile']
-                            
-                        // }],
+                        }
+                        ],
                      
                     }); 
                 }
@@ -1156,16 +1154,14 @@ exports.removesingleproductservice = async function (params){
                         },
                         include: [{
                             model: Unitcost,
+                            required: false,                           
+                        },
+                        {
+                            model: Customer,
                             required: false,
-                            // attributes: ['id','firstname','lastname','email','mobile']
                             
-                        }],
-                        // include: [{
-                        //     model: User,
-                        //     required: false,
-                        //     attributes: ['id','firstname','lastname','email','mobile']
-                            
-                        // }],
+                        }
+                        ],
                      
                     }); 
                 }
@@ -1938,6 +1934,7 @@ exports.productreviewservice = async function (params) {
     var data = Review.build({
         product_id: params.product_id,
         user_id:params.user_id,
+        order_id:params.orderId,
         rating:params.rating,
         ratingcomments:params.ratingcomments,
         status: 0,
@@ -2009,6 +2006,20 @@ exports.getproductreviewservice = async function (id,params) {
         throw Error(e)
     }
 }
+exports.getsingleproductreviewservice = async function (params) {
+
+    var reviewProduct = await Review.findOne({
+        where:{
+            order_id:params.order_id
+        },
+        });
+    try{
+        return reviewProduct;
+    }
+    catch (e) {
+        throw Error(e)
+    }
+}
 exports.viewsingleproductreviewservice = async function (params) {
     var reviewProduct = await Review.findAll({
                         where:{id:params.id},
@@ -2051,6 +2062,24 @@ exports.quantityavailcheckservice = async function (params) {
         else{
             return "true";
         }
+    }
+    catch (e) {
+        throw Error(e)
+    }
+
+}
+
+exports.getordersforreportservice = async function (params) {
+    var orders = await OrderDetails.findAll({
+        include: [{
+            model: User,
+            required: false,
+            
+        }],
+
+        });
+    try{
+      return orders;
     }
     catch (e) {
         throw Error(e)

@@ -658,6 +658,24 @@ exports.removesingleproduct = async function (req, res, next) {
             })
         }
     }
+    exports.getsingleproductreview = async function (req,res,next) {
+        try{
+            var createdRecord = await _service.getsingleproductreviewservice(req.body)
+            return res.status(200).json({
+                status: 200,
+                data: createdRecord
+            })
+        }
+        catch(e){
+            var err = await validateErr.validateError(e);
+            
+            return res.status(400).json({
+                status: 400,
+                success: false,
+                message: err
+            })
+        }
+    }
     exports.viewsingleproductreview = async function (req,res,next) {
         try{
             var createdRecord = await _service.viewsingleproductreviewservice(req.body)
@@ -736,6 +754,25 @@ exports.removesingleproduct = async function (req, res, next) {
             return res.status(200).json({
                 status: 200,
                 message: createdRecord
+            })
+        }
+        catch(e){
+            var err = await validateErr.validateError(e);
+            
+            return res.status(400).json({
+                status: 400,
+                success: false,
+                message: err
+            })
+        }
+    }
+
+    exports.getordersforreport = async function (req,res,next) {
+        try{
+            var createdRecord = await _service.getordersforreportservice(req.body)
+            return res.status(200).json({
+                status: 200,
+                data: createdRecord
             })
         }
         catch(e){
