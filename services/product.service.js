@@ -1174,16 +1174,13 @@ exports.removesingleproductservice = async function (params){
                         },
                         include: [{
                             model: Unitcost,
+                            required: false,                           
+                        },
+                        {
+                            model: Customer,
                             required: false,
-                            // attributes: ['id','firstname','lastname','email','mobile']
                             
                         }],
-                        // include: [{
-                        //     model: User,
-                        //     required: false,
-                        //     attributes: ['id','firstname','lastname','email','mobile']
-                            
-                        // }],
                      
                     }); 
                 

@@ -242,23 +242,23 @@ exports.edituser = async function(get_user,uploading){
        }
    }
 exports.authenticate = async function (email,device_token) {
+
     var record = User.update({
                 
         device_token: device_token },
         {where: { 
-            email: email
+            email:email
             }
     } 
     )
         try {
-           console.log(email)
             var user = User.findOne({
                 where: {
-                    // $or: [{
-                        email: email
-                    // }, {
-                        // mobile: email
-                    // }]
+                    [Op.or]: [{
+                        email:email
+                    }, {
+                        mobile:email
+                    }]
                 }
 
 
