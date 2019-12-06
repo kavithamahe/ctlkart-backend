@@ -6,7 +6,10 @@ var AdminUser = require('../models/adminuser.model');
 
 var Zipcode = require('../models/zipcodedetails.model');
 
+var Pages = require('../models/pagesdetail.model');
+
 var Units = require('../models/units.model');
+
 var Currencies = require('../models/currency.model');
 
 var bcrypt = require('bcryptjs');  
@@ -673,6 +676,63 @@ exports.getsingleunitservice  = async function (params){
             where: {
                 id: params.id
             }
+        });
+
+        return data;
+        }
+        catch (e) {
+           console.log(e);
+        throw Error(e);
+           
+       }
+   }
+   exports.updatepagesservice = async function (params){
+   
+  
+    try {
+                var editPages = await Pages.update({
+                    
+                    content: params.content,
+                    
+        
+            },
+            {where: { id: params.id}}
+            
+             );
+             return editPages;
+            
+       
+        }
+        catch (e) {
+           console.log(e);
+        throw Error(e);
+           
+       }
+   }
+   exports.getpagesservice = async function (params){
+    try {
+        if(params.slug){
+            var data = await Pages.findAll({
+                where:{slug:params.slug}
+            });
+        }
+        else{
+            var data = await Pages.findAll({
+            });
+        }       
+     
+        return data;
+        }
+        catch (e) {
+           console.log(e);
+        throw Error(e);
+           
+       }
+   }
+   exports.getsinglepagesservice = async function (params){
+    try {       
+        var data = await Pages.findOne({
+            where:{id:params.id}
         });
 
         return data;

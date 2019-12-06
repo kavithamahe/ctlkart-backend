@@ -677,9 +677,7 @@ exports.getCurrencyListService = async function (params) {
     try {
 
         var data = Currencies.findAll({
-            where: {
-                status: '1'
-            },
+           
             order: [
                 ['id', 'DESC']
             ],

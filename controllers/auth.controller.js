@@ -637,3 +637,61 @@ exports.getsingleunit = async function (req,res,next) {
         })
     }
 }
+
+exports.updatepages = async function (req,res,next) {
+    try{
+        var createdRecord = await _service.updatepagesservice(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.getpages = async function (req,res,next) {
+    try{
+        var createdRecord = await _service.getpagesservice(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.getsinglepages = async function (req,res,next) {
+    try{
+        var createdRecord = await _service.getsinglepagesservice(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord
+        })
+    }
+    catch(e){
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+
+
+

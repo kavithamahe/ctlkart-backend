@@ -215,6 +215,13 @@ router.post('/getallunits', AuthController.getallunits);
 
 router.post('/getsingleunit', AuthController.getsingleunit);
 
+router.post('/updatepages', AuthController.updatepages);
+
+router.post('/getpages', AuthController.getpages);
+
+router.post('/getsinglepages', AuthController.getsinglepages);
+
+
 
 
 
