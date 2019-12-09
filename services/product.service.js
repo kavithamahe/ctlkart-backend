@@ -745,28 +745,21 @@ exports.removesingleproductservice = async function (params){
                             
                         })
                         var ordersavedRecord = await orderdata.save();
-                        var smtpTransport = nodemailer.createTransport({
-                            service:'amazonaws',
-                              host:'email-smtp.us-west-2.amazonaws.com',
-                              port: 587,
-                              secure: false,
-                               auth: {
-                                 user: "AKIAWO7WTEBCK7OYG7HE",
-                                 pass: "BCINzOgjhD1Cw1wC6I+cUooK675WEn/e2DWFhRGFt9Ze"
-                              }
-                          });
-                        // var transporter = nodemailer.createTransport({
+                   
+                        var transporter = nodemailer.createTransport({
                             
-                        //     service: 'gmail',
-                        //     host:'smtp.gmail.com',
-                        //     auth: {
-                        //       user: 'kavithamahe2@gmail.com',
-                        //       pass: 'kavithabe94'
-                        //     },
-                        //     tls: {
-                        //         rejectUnauthorized: false
-                        //     }
-                        //   });
+                            service: 'gmail',
+                            host:'smtp.gmail.com',
+                            port:465,
+                            secure:true,
+                            auth: {
+                              user: 'kavithamahe2@gmail.com',
+                              pass: 'kavithabe94'
+                            },
+                            tls: {
+                                rejectUnauthorized: false
+                            }
+                          });
                           
                           var mailOptions = {
                             from: 'templore@claritaz.com',
