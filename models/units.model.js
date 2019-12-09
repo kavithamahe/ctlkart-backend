@@ -12,6 +12,10 @@ var unitsDetails = sequelize.define('unitsdetails', {
     units: {
         type: Sequelize.STRING(255),
         allowNull: false,
+        unique: {
+            args: true,
+            msg: 'Unit name already in use!'
+        },
     },
     description: {
         type: Sequelize.STRING(255),

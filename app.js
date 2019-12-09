@@ -93,7 +93,7 @@ app.use(expressJwt({
 
 }).unless({ path: ['/api/login', '/api/register','/api/password/forgot','/api/addcategory','/api/addsubcategory','/api/getcategory','/api/getcategorysearch','/api/getsubcategorysearch','/api/getsubcategory','/api/onetimepassword','/api/viewsingleaddress','/api/editaddress','/api/productcheckoutformcart','/api/updatecartquantity','/api/adminregister','/api/adminlogin'
 ,'/api/addproduct','/api/editsingleproduct','/api/getproductlist','/api/viewsingleproduct','/api/addaddress','/api/getaddress','/api/productcheckout','/api/addsubsubcategory','/api/getproductlistsearch','/api/getsubsubcategory','/api/addtocart','/api/getcartproduct','/api/removecartproduct','/api/getsubsubcategorysearch','/api/categorystatuschange','/api/quantityavailcheck','/api/getordersforreport',
-'/api/getuserszipcode','/api/getpendingorder','/api/getusers','/api/addunits','/api/editunits','/api/removeunits','/api/getallunits','/api/getsingleunit','/api/viewsingleorder','/api/getsinglecategory','/api/getsinglecategory',
+'/api/getuserszipcode','/api/getpendingorder','/api/getusers','/api/addunits','/api/editunits','/api/removeunits','/api/getallunits','/api/getsingleunit','/api/viewsingleorder','/api/getsinglecategory','/api/getsinglecategory','/api/getsinglesubcategory',
 '/api/editcategory','/api/getmyorders','/api/statuschangefororder','/api/addCurrencies','/api/getCurrencyList','/api/getcurrencysearch','/api/getsinglecurrency','/api/updateCurrency','/api/deletecurrency','/api/addstocksettings','/api/addcurrencySettings','/api/getSettings','/api/removesingleproduct','/api/updatepages','/api/getpages','/api/getsinglepages'] }));
 
 
@@ -113,7 +113,7 @@ app.use('/api', api);
 
 // start server
 
-var port = process.env.NODE_ENV === 'development' ? 3000 : 3000;     
+var port = process.env.NODE_ENV === 'production' ? 5003 : 5003;     
 
 var server = app.listen(port, function () {
     console.log('Server listening on port ' + port); 
