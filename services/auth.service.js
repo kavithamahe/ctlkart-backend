@@ -26,7 +26,7 @@ var Sequelize = require('sequelize');
 
 var cc = require('currency-codes');
 
-const getSymbolFromCurrency = require('currency-symbol-map')
+const getSymbolFromCurrency = require('currency-symbol-map');
 
 // console.log(cc.countries());
 
@@ -54,6 +54,7 @@ exports.getUser = async function(req){
 }
 
 exports.createuser = async function (params) {
+ 
     var str = params.country_code;
     var n = str.includes("+");
     if(n == true){
@@ -62,7 +63,6 @@ exports.createuser = async function (params) {
     else{
         var mobilenumber ="+" + params.country_code + params.mobile;
     }
-    console.log(mobilenumber)
     var username = params.firstname + " " + params.lastname;
     var record = User.build({
         firstname: params.firstname,

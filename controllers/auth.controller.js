@@ -6,11 +6,35 @@ var validateErr = require('../utils/validateError');
 
 var config = db.config;
 
+var Pusher = require('pusher');
+
+var pusher = new Pusher({
+    appId: '915486',
+    key: '65ddc2fa9aadcddeb731',
+    secret: 'f491033379612edd35b3',
+    encrypted: true,
+    cluster: 'ap2',
+  });
 
 exports.register = async function (req, res, next) {
 
     try {
         var createdRecord = await _service.createuser(req.body)
+
+        const titles = [];
+        let title = "CTLKART";
+        let body = createdRecord.firstname + "is added in ctlkart";
+        
+          titles.push(title.trim());
+          pusher.trigger('realtime-feeds', 'posts', {
+            title: title.trim(),
+            body: body.trim(),
+            time: new Date(),
+          });
+        
+        //   res
+        //     .status(200)
+        //     .send({ message: 'Post was successfully created', status: true });
         return res.status(200).json({
             status: 200,
             data: createdRecord,

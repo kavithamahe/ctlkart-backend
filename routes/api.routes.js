@@ -225,9 +225,4 @@ router.post('/getsinglepages', AuthController.getsinglepages);
 
 
 
-
-
-
-
-
 module.exports = router;

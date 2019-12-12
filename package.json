@@ -28,6 +28,8 @@
     "node-static": "^0.7.11",
     "nodemailer": "^6.2.1",
     "nodemon": "^1.19.1",
+    "pusher": "^3.0.0",
+    "pusher-js": "^5.0.3",
     "random-id": "^1.0.3",
     "rootpath": "^0.1.2",
     "sequelize": "^5.8.9",
