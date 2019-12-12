@@ -10,6 +10,8 @@ var MasterController = require('../controllers/master.controller');
 
 var ProductController = require('../controllers/product.controller');
 
+var PaymentController = require('../controllers/payment.controller');
+
 var storage = multer.diskStorage({ 
     destination: function (req, file, cb) {     
       cb(null, './uploads')  
@@ -222,6 +224,15 @@ router.post('/getpages', AuthController.getpages);
 router.post('/getsinglepages', AuthController.getsinglepages);
 
 
+// .................................//Payment...........................//
+
+router.post('/addpaymentkey', PaymentController.addpaymentkey);
+
+router.post('/updatepaymentkey', PaymentController.updatepaymentkey);
+
+router.post('/getpaymentkey', PaymentController.getpaymentkey);
+
+router.post('/razorpaymentresponse', PaymentController.razorPaymentResponse);
 
 
 
