@@ -708,7 +708,7 @@ exports.getsingleunitservice  = async function (params){
         throw Error(e);
            
        }
-   }
+    }
    exports.getpagesservice = async function (params){
     try {
         if(params.slug){

@@ -121,6 +121,14 @@ var Orders = sequelize.define('OrderDetails', {
         type: Sequelize.STRING(1025),
         allowNull: true, 
     },
+    payment_status: {
+        type: Sequelize.TINYINT(4).UNSIGNED,
+        allowNull: true,
+    },
+    payment_id: {
+        type: Sequelize.STRING(255),
+        allowNull: true, 
+    },
     created_at: Sequelize.DATE,
     updated_at: Sequelize.DATE,
 }, {

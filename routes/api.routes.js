@@ -234,6 +234,10 @@ router.post('/getpaymentkey', PaymentController.getpaymentkey);
 
 router.post('/razorpaymentresponse', PaymentController.razorPaymentResponse);
 
+router.post('/onlinepaymentsetting', PaymentController.onlinepaymentsetting);
+
+router.post('/getpaymentsetting', PaymentController.getpaymentsetting);
+
 
 
 module.exports = router;

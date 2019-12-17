@@ -23,6 +23,10 @@ var settings = sequelize.define('settings', {
         type: Sequelize.TINYINT(),
         allowNull: true
     },
+    onlinepayment_status: {
+        type: Sequelize.TINYINT(),
+        allowNull: true
+    },
     status:{
         type:Sequelize.TINYINT(),
 

@@ -31,6 +31,7 @@
     "pusher": "^3.0.0",
     "pusher-js": "^5.0.3",
     "random-id": "^1.0.3",
+    "razorpay": "^2.0.5",
     "rootpath": "^0.1.2",
     "sequelize": "^5.8.9",
     "sequelize-cli": "^5.5.0",

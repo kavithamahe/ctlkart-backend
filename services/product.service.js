@@ -2,6 +2,7 @@ var Product = require('../models/product.model');
 var Unitcost = require('../models/costperunit.model');
 var Customer = require('../models/customer.model');
 var OrderDetails = require('../models/order.model');
+var PaymentUser = require('../models/paymentdetails.model');
 var cartDetails = require('../models/cartdetails.model');
 var Master = require('../models/master.model');
 var Subcategory = require('../models/subcategory.model');
@@ -17,6 +18,13 @@ var nodemailer = require('nodemailer');
 var db = require('../shared/config') ;
 
 var randomId = require('random-id');
+
+var Razorpay = require('razorpay');
+
+var rzp = new Razorpay({
+    key_id: "rzp_test_cGa8WOh98HS217", // your `KEY_ID`
+    key_secret: "XuzJ1bZhaQ35OML56WXYhRwN" // your `KEY_SECRET`
+  })
 
 const Op = Sequelize.Op;
 var config = db.config; 
@@ -1621,6 +1629,19 @@ exports.ordercancelbyuserservice = async function (params){
     var time = cancelled_date.getHours() + ":" + cancelled_date.getMinutes() + ":" + cancelled_date.getSeconds();
     var cancelled_time = date+' '+time;
     try { 
+        if(params.razorpayment_id){
+        rzp.payments.refund(params.razorpayment_id, {
+        // amount: 2000,
+        notes: {
+        note1: 'This is a test refund',
+        note2: 'This is a test note'
+        }
+        }).then((data) => {
+            console.log(data)
+        }).catch((error) => {
+            console.error(error)
+        })
+    }
         var updatecartproductList  = await OrderDetails.update({
             status:4,
             cancelled_date:cancelled_date,

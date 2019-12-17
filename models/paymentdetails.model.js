@@ -1,4 +1,5 @@
 var db = require('../shared/config');
+var Order = require('../models/order.model');
 
 const sequelize = db.sequelize;  
 const Sequelize = db.Sequelize;
@@ -26,8 +27,8 @@ var PaymentUser = sequelize.define('paymentuser', {
         allowNull: true,
     },
     order_id: {
-        type: Sequelize.INTEGER(11).UNSIGNED,
-        allowNull: true,
+        type: Sequelize.STRING(255),
+        allowNull: false,
     },
     status: {
         type: Sequelize.TINYINT(4).UNSIGNED,
@@ -40,6 +41,9 @@ var PaymentUser = sequelize.define('paymentuser', {
     createdAt: "created_at",
     updatedAt: "updated_at"
 })
+
+PaymentUser.hasMany(Order, {foreignKey: 'order_id'});
+Order.belongsTo(PaymentUser, {foreignKey: 'order_id'});
 
 PaymentUser.sync({force:false,alter:false});
 

@@ -85,3 +85,44 @@ exports.razorPaymentResponse = async function (req, res, next) {
         })
     }
 }
+
+exports.onlinepaymentsetting = async function (req, res, next) {
+
+    try {
+        var createdRecord = await _service.onlinepaymentsettingservice(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord,
+            success: true, 
+        })
+    } catch (e) {
+        console.log(e)
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
+exports.getpaymentsetting = async function (req, res, next) {
+
+    try {
+        var createdRecord = await _service.getpaymentsettingservice(req.body)
+        return res.status(200).json({
+            status: 200,
+            data: createdRecord,
+            success: true, 
+        })
+    } catch (e) {
+        console.log(e)
+        var err = await validateErr.validateError(e);
+        
+        return res.status(400).json({
+            status: 400,
+            success: false,
+            message: err
+        })
+    }
+}
